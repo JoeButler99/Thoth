@@ -1,0 +1,11 @@
+*.o
+Debug
+bin/*
+.cproject
+.project
+.pydevproject
+*~
+program_guesses
+nodetree.*
+conf/*.json
+.settings

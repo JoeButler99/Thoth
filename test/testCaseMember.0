@@ -1,0 +1,16 @@
+#
+# Generated Node Tree from F. 
+# This Tree scored: 25.2386
+# Total Nodes: 12
+F:-1| ROOT WITH(1) inputs
+.F:1| Subtract
+..F:9| Min 2
+...F:8| AVG 2
+....T:0|
+....T:0|
+...F:3| Multiply
+....T:0|
+....T:0|
+..F:26| ln e
+...F:14| Int Me
+....T:0|
