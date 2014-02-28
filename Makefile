@@ -5,9 +5,9 @@ TEST=test/
 BUILD=build/
 SRC=src/
 CONF=conf/
-CCFLAGS=-c -Wall  -g -fopenmp 
+#CCFLAGS=-c -Wall  -g -fopenmp 
 #CCFLAGS=-c -Wall  -g -fopenmp -pg
-#CCFLAGS=-c -Wall  -O3 -fopenmp -mfpmath=sse -march=native
+CCFLAGS=-c -Wall  -O3 -fopenmp -mfpmath=sse -march=native
 #CCFLAGS=-c -Wall  -Ofast -fopenmp -mfpmath=sse -march=native
 CPPUNITLINKS=-lcppunit
 MAINLINKS=-lgomp

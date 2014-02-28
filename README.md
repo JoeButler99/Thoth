@@ -126,9 +126,22 @@ After a couple of loops you will notice this 'gets stuck'. It also kept a small 
 
 
 * Now using the editor again, lets 'loosen' the node weight in conf/config.json so it may grow more freely
-** check that the NODE_WEIGHT equals 0.0005
-** Now run Thoth through a couple of times  "bin/Thoth"
+ * check that the NODE_WEIGHT equals 0.0005
+ * Now run Thoth through a couple of times  "bin/Thoth"
+ * If you now repeat the graphing and output steps above, you should see that the program has grown considerably and is much better at solving
+ * Now is a good time to play with the settings and run it through some more
+ 
+ 
+ Making a prediction outside of the test cases
+ 
+ * Thoth can now use the generated structure to make guesses outside of the test case range. Try the following to see how it scores
 
+    bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 10
+    bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables -10
+    bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 50
+    bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 999
+
+You can find the real answers with sin x on a calculator. Google also has the answers!
 
 
 Test Cases
