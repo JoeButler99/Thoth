@@ -33,11 +33,24 @@ void NodeManager::setupSelf() {
 	initFunctions();
 }
 
+
+
+
+
+
 void NodeManager::initFunctions() {
-	Function cpfadd 		= Function("Add",2,0) ;
-	Function cpfsubtract	= Function("Subtract",2,1) ;
-	Function cpfdivide   	= Function("Multiply",2,2) ;
-	Function cpfmultiply 	= Function("Divide",2,3) ;
+	// Try to find the function set from the settings and load it into the function list
+
+functionlist.push_back(Function("Add",2,0,rpnAdd));
+functionlist.push_back(Function("Subtract",2,1,rpnSubtract));
+functionlist.push_back(Function("Multiply",2,2,rpnMultiply));
+functionlist.push_back(Function("Divide",2,3,rpnDivide));
+
+
+//	Function cpfadd 		= Function("Add",2,0,) ;
+//	Function cpfsubtract	= Function("Subtract",2,1) ;
+//	Function cpfdivide   	= Function("Multiply",2,2) ;
+//	Function cpfmultiply 	= Function("Divide",2,3) ;
 //	Function cpfsquared 	= Function("Square",1,4) ;
 //	Function cpfpercentme	= Function("PercentMe",1,5) ;
 //	Function cpfpcchange	= Function("PercentChg",2,6);
@@ -63,10 +76,10 @@ void NodeManager::initFunctions() {
 //	Function cpflne			= Function("ln e",1,26);
 
 
-	functionlist.push_back(cpfadd); //setLastFunctionLocation();
-	functionlist.push_back(cpfsubtract); //setLastFunctionLocation();
-	functionlist.push_back(cpfdivide); //setLastFunctionLocation();
-	functionlist.push_back(cpfmultiply); //setLastFunctionLocation();
+//	functionlist.push_back(cpfadd); //setLastFunctionLocation();
+//	functionlist.push_back(cpfsubtract); //setLastFunctionLocation();
+//	functionlist.push_back(cpfdivide); //setLastFunctionLocation();
+//	functionlist.push_back(cpfmultiply); //setLastFunctionLocation();
 //	functionlist.push_back(cpfsquared); //setLastFunctionLocation();
 //	functionlist.push_back(cpfpercentme); //setLastFunctionLocation();
 //	functionlist.push_back(cpfpcchange); //setLastFunctionLocation();

@@ -132,7 +132,7 @@ void PopulationManager::scoreAllVecRpn() {
 
 void PopulationManager::sortByScore() {
 	// Have overloaded operator< to make this fast
-	sort(populationlist.v.begin(),populationlist.v.end());
+	std::sort(populationlist.v.begin(),populationlist.v.end());
 }
 
 
@@ -180,7 +180,7 @@ void PopulationManager::addNodesToFile(int population_member_id, std::ofstream *
 		if (n.fNo == -1) {
 			*writefile<<"F:"<<n.fNo<<"| ROOT WITH("<< n.fInputs << ") inputs" <<std::endl;
 		} else {
-			*writefile<<"F:"<<n.fNo<<"| "<< gm.nodeManager.functionlist.at(n.fNo)._name  <<std::endl;
+			*writefile<<"F:"<<n.fNo<<"| "<< gm.nodeManager.functionlist.at(n.fNo).name  <<std::endl;
 		}
 		for(unsigned int x = 0; x < n.fInputs;x++) {
 			addNodesToFile(population_member_id,writefile,depth +1);

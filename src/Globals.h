@@ -29,8 +29,6 @@
 #include <string>
 #include "RNG.h"
 
-typedef void (*function_ptr)(void);
-typedef void (*function_ptr_uint)(unsigned);
 
 //// Global Objects
 extern RNG rng;
@@ -42,5 +40,9 @@ const double EULER = 2.71828182845;
 const unsigned int MAX_ARGS = 4;
 
 
+// Function Pointers
+typedef void (*function_ptr)(void);
+typedef void (*function_ptr_uint)(unsigned);
+typedef void (*rpn_action_ptr)(double rpnStack[RPN_STACK_LIMIT],int & highest);
 
 #endif /* GLOBALS_H_ */
