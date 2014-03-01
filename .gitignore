@@ -9,3 +9,4 @@ program_guesses
 nodetree.*
 conf/*.json
 .settings
+profiling
