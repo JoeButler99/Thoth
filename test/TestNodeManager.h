@@ -84,7 +84,7 @@ protected:
 		nm.setupSelf();
 
 		Function & f = nm.giveRandFunction();
-		CPPUNIT_ASSERT(f._inputs != 0);
+		CPPUNIT_ASSERT(f.inputs != 0);
 
 	}
 
@@ -95,13 +95,13 @@ protected:
 		nm.setupSelf();
 
 		Function & f = nm.giveRandFunction(2);
-		CPPUNIT_ASSERT(f._inputs == 2);
+		CPPUNIT_ASSERT(f.inputs == 2);
 
 		f = nm.giveRandFunction(1);
-		CPPUNIT_ASSERT(f._inputs == 1);
+		CPPUNIT_ASSERT(f.inputs == 1);
 
 		f = nm.giveRandFunction(4);
-		CPPUNIT_ASSERT(f._inputs == 4);
+		CPPUNIT_ASSERT(f.inputs == 4);
 
 	}
 
@@ -112,16 +112,16 @@ protected:
 		nm.setupSelf();
 
 		Function & f = nm.getFunctionByNum(3);
-		CPPUNIT_ASSERT(f._inputs == 2);
-		CPPUNIT_ASSERT(f._name == "Divide");
+		CPPUNIT_ASSERT(f.inputs == 2);
+		CPPUNIT_ASSERT(f.name == "Divide");
 
 		f = nm.getFunctionByNum(4);
-		CPPUNIT_ASSERT(f._inputs == 1);
-		CPPUNIT_ASSERT(f._name == "Square");
+		CPPUNIT_ASSERT(f.inputs == 1);
+		CPPUNIT_ASSERT(f.name == "Square");
 
 		f = nm.getFunctionByNum(12);
-		CPPUNIT_ASSERT(f._inputs == 4);
-		CPPUNIT_ASSERT(f._name == "Min 4");
+		CPPUNIT_ASSERT(f.inputs == 4);
+		CPPUNIT_ASSERT(f.name == "Min 4");
 	}
 };
 

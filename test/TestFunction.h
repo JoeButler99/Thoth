@@ -85,31 +85,31 @@ public:
 protected:
 	 void testCustomConstructor() {
 		std::cerr << "Function:\t\t" <<  __func__ << std::endl;
-		Function f("Fadd",2,0);
-		CPPUNIT_ASSERT(f._name == "Fadd");
-		CPPUNIT_ASSERT(f._inputs == 2);
-		CPPUNIT_ASSERT(f._mynum == 0);
+		Function f("Fadd",2,0,rpnAdd);
+		CPPUNIT_ASSERT(f.name == "Fadd");
+		CPPUNIT_ASSERT(f.inputs == 2);
+		CPPUNIT_ASSERT(f.mynum == 0);
 	 }
 
 	 void testDisplaySelf() {
 	 	std::cerr << "Function:\t\t" <<  __func__ << std::endl;
-		Function f("Fadd",2,0);
-		CPPUNIT_ASSERT(f._name == "Fadd");
-		CPPUNIT_ASSERT(f._inputs == 2);
-		CPPUNIT_ASSERT(f._mynum == 0);
+		Function f("Fadd",2,0,rpnAdd);
+		CPPUNIT_ASSERT(f.name == "Fadd");
+		CPPUNIT_ASSERT(f.inputs == 2);
+		CPPUNIT_ASSERT(f.mynum == 0);
 		CPPUNIT_ASSERT(f.displaySelf() == "Fadd");
 	 }
 
 
 	 void testAction() {
 	 	std::cerr << "Function:\t\t" <<  __func__ << std::endl;
-	 	Function f("Fadd",2,0);
+	 	Function f("Fadd",2,0,rpnAdd);
 	 	CPPUNIT_ASSERT(f.action(10,20) == 30);
 	 }
 
 	 void testFadd() {
 	 	std::cerr << "Function:\t\t" <<  __func__ << std::endl;
-		Function f("Fadd",2,0);
+		Function f("Fadd",2,0,rpnAdd);
 		CPPUNIT_ASSERT(fabs(f.action(10,12) - 22 ) < 0.000001);
 		CPPUNIT_ASSERT(fabs(f.action(-10,12) - 2 ) < 0.000001);
 		CPPUNIT_ASSERT(fabs(f.action(-0.5,0) - -0.5 ) < 0.000001);
@@ -120,7 +120,7 @@ protected:
 
 	 void testFsubtract() {
 	 	std::cerr << "Function:\t\t" <<  __func__ << std::endl;
-		Function f("Fsubtract",2,1);
+		Function f("Fsubtract",2,1,rpnSubtract);
 		CPPUNIT_ASSERT(fabs(f.action(10,12) - -2 ) < 0.000001);
 		CPPUNIT_ASSERT(fabs(f.action(-10,12) - -22 ) < 0.000001);
 		CPPUNIT_ASSERT(fabs(f.action(-0.5,0) - -0.5 ) < 0.000001);
@@ -131,7 +131,7 @@ protected:
 
 	 void testFmultiply() {
 	 	std::cerr << "Function:\t\t" <<  __func__ << std::endl;
-	 	Function f("Fmultiply",2,2);
+	 	Function f("Fmultiply",2,2,rpnMultiply);
 	 	CPPUNIT_ASSERT(fabs(f.action(10,12) - 120 ) < 0.000001);
 	 	CPPUNIT_ASSERT(fabs(f.action(-10,12) - -120 ) < 0.000001);
 		CPPUNIT_ASSERT(fabs(f.action(-0.5,0) - 0 ) < 0.000001);
