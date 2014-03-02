@@ -147,6 +147,15 @@ After a couple of loops you will notice this 'gets stuck'. It also kept a small 
 You can find the real answers with sin x on a calculator. Google also has the answers!
 
 
+Your program may or may not be good at solving these, but we can evolve a better program by using the extended sin test cases.
+
+Run Thoth again, specifying these cases.  
+
+    bin/Thoth --fitness-cases fitness_cases/testTwoSinx_20c
+    
+If the program scored very poorly with the extended cases, its likely to find a brand new member to fill its place, otherwise it will continue with the nodetree you have already grown. 
+
+
 Test Cases
 ==========
 
