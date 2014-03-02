@@ -180,7 +180,7 @@ class PyDot:
     def add_node(self,line):
         cleaned = line.strip()
         depth , name , is_terminal = nt.get_node(line)
-        if cleaned[0] == 'F' and cleaned[1] != 'U':
+        if cleaned[0] == 'F':
             n = pydot.Node(self.node_no, label=name,style="filled",fillcolor="green")
             self.parents[0] = n
             self.graph.add_node(n)
@@ -201,7 +201,7 @@ class PyDot:
         try:
             with open(options.nodetree_file,'r') as f:
                 for line in f:
-                    if len(line) > 0 and line[0] != '#' and line[0] != "C":
+                    if len(line) > 0 and line[0] != '#' and line[0] != "C" and line[:2] != "FU":
                         self.add_node(line)
             self.loaded = True
         except:

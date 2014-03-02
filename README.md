@@ -15,6 +15,7 @@ Features
 * Optimisation loops
 * Constant generation, load and save
 * Population and Bloat control systems
+* Function selection system
 * Reverse Polish Notation solving loop ( Instead of tree recursion )
 * Graphing of results with matplotlib
 * Unit testing and a basic profiler
@@ -203,14 +204,13 @@ Planned Improvements
 ====================
 
 * Constant optimisation -> Its something I'd like to have in place very soon
-* Dynamic selection of functions. Probably the feature I'd like to see most, I'm currently unsure how to setup this up without compromising on speed.
 * Making the fitness case settings more verbose. ( Instead of the numbers at the top. )
 * Genetic Islands -> Separating parts of the population into distinct islands so they may evolve with more diversity.
 * Re-using threads to save on initialisation cost.
 * Better profiling with saved structures
 * A configure script
 * Standardisation of string methods. There's a big mix of c & c++ styles in there.
-* The test cases need a good clean up, and the recent changes to the config system are not covered.
+* The test cases need a good clean up, and the recent changes to the configuration system are not covered.
 
 
 
@@ -220,7 +220,7 @@ Troubleshooting
 Program crash on launch
 ----------------------- 
     
-* Check that you don't have any nodetrees not suitable for these fitness cases
+* Check that you don't have any nodetrees not suitable for the chosen fitness cases. I'll be adding protection against this soon
     
     
     
