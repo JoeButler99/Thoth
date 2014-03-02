@@ -199,6 +199,7 @@ void PopulationManager::writeMembersToDisk() {
 		writefile << "#\n# Generated Node Tree from " << gm.settings.FITNESS_CASE_FILE << "\n";
 		writefile << "# This Tree scored: " << populationlist.v.at(x).score << "\n";
 		writefile << "# Total Nodes: " << populationlist.v.at(x).rpnNodeVec.size() << "\n";
+		writefile << "FUNCTION_SET: " << gm.settings.FUNCTION_SET << "\n";
 		pos = -1;
 		addConstantsToFile(&writefile);
 		addNodesToFile(x,&writefile,0);
@@ -248,7 +249,7 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 			int depth;
 			// Split the lines by the '|' which I chose as a delimiter between node definition and notes
 			while( getline(stream, nodedef, '|') ) {
-				// We only need the node side bit
+				// We only need the node side section
 				if (part == 0) {
 					// If we are not at a comment line, we need to make a node!
 					if ( nodedef.at(0) != '#' ) {
@@ -264,6 +265,16 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 
 							ConstantPool cp(savedConstants);
 							gm.fitnessCases.updateConstantSet(cp);
+						} else if (nodedef.at(0) == 'F' && nodedef.at(1) == 'U') {
+							// We just need to check this function set is the same as the one the config loaded
+							// This must quietly change to the correct function set, so if we are solving
+							// we do not pollute the output with a message
+							std::string functionSet = nodedef.replace(0,14,"");
+							functionSet.erase(std::remove(functionSet.begin(), functionSet.end(), '\n'), functionSet.end());
+							if (functionSet != gm.settings.FUNCTION_SET) {
+								gm.settings.FUNCTION_SET.assign(functionSet);
+								gm.nodeManager.initFunctions();
+							}
 
 						} else {
 							// Now delete the '.'s

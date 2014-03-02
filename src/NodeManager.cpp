@@ -30,13 +30,8 @@ NodeManager::NodeManager() { }
 NodeManager::~NodeManager() {}
 
 void NodeManager::setupSelf() {
-	//initTerminals();
 	initFunctions();
 }
-
-
-
-
 
 
 void NodeManager::initFunctions() {

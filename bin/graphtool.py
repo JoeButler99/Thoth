@@ -136,7 +136,7 @@ class Nodetree:
             if 'CONSTANTS ' in cleaned:
                 self.constants = [ float(x) for x in cleaned.replace('CONSTANTS ','').rstrip('|').lstrip("+").split('+') ]
             # Load the nodes and their depths
-            if cleaned[0] == 'F':
+            if cleaned[0] == 'F' and cleaned[1] != 'U' and cleaned[2] != '-':
                 self.outputs = int(cleaned.replace('F:-1| ROOT WITH(','').replace(') inputs',''))
                 self.function_map['Root (%s)' % str(self.outputs)] = 1 
             if cleaned[0] == '.':
