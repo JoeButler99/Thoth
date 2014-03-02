@@ -31,6 +31,7 @@
 #include "RNG.h"
 #include "GlobalManager.h"
 #include "FitnessCases.h"
+#include "NodeManager.h"
 
 
 class PopulationMember {

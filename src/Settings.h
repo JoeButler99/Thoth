@@ -31,6 +31,7 @@
 
 class Settings {
 public:
+	std::string  FUNCTION_SET;
 	unsigned int POPULATION;
 	unsigned int KEEP_TOP_PERCENT;
 	double       NODE_WEIGHT;

@@ -79,8 +79,11 @@ $(BUILD)TvectorPM.o: $(BUILD)PopulationMember.o
 $(BUILD)PopulationMember.o: $(BUILD)NodeManager.o
 	$(CC) $(CCFLAGS) $(SRC)PopulationMember.cpp -o $(BUILD)PopulationMember.o
 
-$(BUILD)NodeManager.o: $(BUILD)Node.o
+$(BUILD)NodeManager.o: $(BUILD)Node.o $(BUILD)FunctionSet.o
 	$(CC) $(CCFLAGS) $(SRC)NodeManager.cpp -o $(BUILD)NodeManager.o
+	
+$(BUILD)FunctionSet.o:
+	$(CC) $(CCFLAGS) $(SRC)FunctionSet.cpp -o $(BUILD)FunctionSet.o
 
 $(BUILD)Node.o: $(BUILD)Function.o
 	$(CC) $(CCFLAGS) $(SRC)Node.cpp -o $(BUILD)Node.o

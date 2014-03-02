@@ -30,10 +30,10 @@
 #include "RPNActions.h"
 #include "Function.h"
 #include "RNG.h"
+#include "FunctionSet.h"
+#include "GlobalManager.h"
 
 
-
-extern RNG rng;
 
 class NodeManager {
 public:

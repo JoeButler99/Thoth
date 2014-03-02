@@ -24,6 +24,7 @@
 
 #include "NodeManager.h"
 
+
 NodeManager::NodeManager() { }
 
 NodeManager::~NodeManager() {}
@@ -41,10 +42,17 @@ void NodeManager::setupSelf() {
 void NodeManager::initFunctions() {
 	// Try to find the function set from the settings and load it into the function list
 
-functionlist.push_back(Function("Add",2,0,rpnAdd));
-functionlist.push_back(Function("Subtract",2,1,rpnSubtract));
-functionlist.push_back(Function("Multiply",2,2,rpnMultiply));
-functionlist.push_back(Function("Divide",2,3,rpnDivide));
+	FunctionSet::buildFunctionSets();
+	for (unsigned x = 0; x < FunctionSet::functionSets.size(); x++) {
+		if (FunctionSet::functionSets.at(x).name == gm.settings.FUNCTION_SET) {
+			functionlist = FunctionSet::functionSets.at(x).functionList;
+		}
+	}
+
+//functionlist.push_back(Function("Add",2,0,rpnAdd));
+//functionlist.push_back(Function("Subtract",2,1,rpnSubtract));
+//functionlist.push_back(Function("Multiply",2,2,rpnMultiply));
+//functionlist.push_back(Function("Divide",2,3,rpnDivide));
 
 
 //	Function cpfadd 		= Function("Add",2,0,) ;
