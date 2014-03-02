@@ -105,6 +105,9 @@ void ArgParser::loadArgs(int argc, char* argv[]) {
 			// Set the default action to improve if not specified.
 			if (action == "") {	action = "improve"; }
 
+			// Set the default config if not specified.
+			if (configFile == "") { configFile   = "conf/config.json"; }
+
 		}
 	} else {
 		// When no arguments are passed in, we setup defaults to
