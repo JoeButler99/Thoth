@@ -26,11 +26,14 @@
 #define NODEMANAGER_H_
 
 #include <vector>
+#include "Globals.h"
+#include "RPNActions.h"
 #include "Function.h"
 #include "RNG.h"
-#include "Globals.h"
+#include "FunctionSet.h"
+#include "GlobalManager.h"
 
-extern RNG rng;
+
 
 class NodeManager {
 public:
@@ -41,11 +44,13 @@ public:
 
 	void setupSelf();
 	void initFunctions();
+	void buildFunctionSets();
+
 
 	inline Function & getFunctionByNum(unsigned int fNo) {
 
 		for(unsigned int x = 0; x < functionlist.size(); x++) {
-			if(functionlist.at(x)._mynum == fNo) {
+			if(functionlist.at(x).mynum == fNo) {
 				return functionlist.at(x);
 			}
 		}
@@ -62,7 +67,7 @@ public:
 		int f;
 		while (true) {
 			f = rng.iRand(functionlist.size());
-			if (functionlist.at(f)._inputs == inputs) {
+			if (functionlist.at(f).inputs == inputs) {
 				break;
 			}
 		}

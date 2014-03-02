@@ -26,6 +26,7 @@
 
 // Constructor with some default initialisers
 Settings::Settings() :
+	FUNCTION_SET("Basic"),
 	POPULATION(8000),
 	KEEP_TOP_PERCENT(25),
 	NODE_WEIGHT(1),
@@ -62,7 +63,8 @@ Settings::~Settings() {}
 
 void Settings::displaySettings() {
 	question_msg("Thoth Settings - (JSON & Defaults):\n\n");
-	std::cout << "POPULATION:\t\t\t" << POPULATION  << std::endl;
+	std::cout << "FUNCTION_SET:\t\t\t" << FUNCTION_SET  << std::endl;
+	std::cout << " POPULATION:\t\t\t" << POPULATION  << std::endl;
 	std::cout << " KEEP_TOP_PERCENT:\t\t" << KEEP_TOP_PERCENT  << std::endl;
 	std::cout << " NODE_WEIGHT:\t\t\t" << NODE_WEIGHT  << std::endl;
 	std::cout << " GENERATIONS:\t\t\t" << GENERATIONS  << std::endl;

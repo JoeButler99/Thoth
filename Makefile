@@ -7,8 +7,8 @@ SRC=src/
 CONF=conf/
 #CCFLAGS=-c -Wall  -g -fopenmp 
 #CCFLAGS=-c -Wall  -g -fopenmp -pg
-CCFLAGS=-c -Wall  -O3 -fopenmp -mfpmath=sse -march=native
-#CCFLAGS=-c -Wall  -Ofast -fopenmp -mfpmath=sse -march=native
+#CCFLAGS=-c -Wall  -O3 -fopenmp -mfpmath=sse -march=native
+CCFLAGS=-c -Wall  -Ofast -fopenmp -mfpmath=sse -march=native
 CPPUNITLINKS=-lcppunit
 MAINLINKS=-lgomp
 
@@ -79,8 +79,11 @@ $(BUILD)TvectorPM.o: $(BUILD)PopulationMember.o
 $(BUILD)PopulationMember.o: $(BUILD)NodeManager.o
 	$(CC) $(CCFLAGS) $(SRC)PopulationMember.cpp -o $(BUILD)PopulationMember.o
 
-$(BUILD)NodeManager.o: $(BUILD)Node.o
+$(BUILD)NodeManager.o: $(BUILD)Node.o $(BUILD)FunctionSet.o
 	$(CC) $(CCFLAGS) $(SRC)NodeManager.cpp -o $(BUILD)NodeManager.o
+	
+$(BUILD)FunctionSet.o:
+	$(CC) $(CCFLAGS) $(SRC)FunctionSet.cpp -o $(BUILD)FunctionSet.o
 
 $(BUILD)Node.o: $(BUILD)Function.o
 	$(CC) $(CCFLAGS) $(SRC)Node.cpp -o $(BUILD)Node.o

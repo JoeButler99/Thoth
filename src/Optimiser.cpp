@@ -241,10 +241,10 @@ bool Optimiser::functionSwapper(PopulationMember & p) {
 		    {
 #pragma omp for schedule(dynamic)
 				for (unsigned int y = 0; y < gm.nodeManager.functionlist.size(); y ++) {
-					if ((int)gm.nodeManager.functionlist.at(y)._mynum != fid) {
+					if ((int)gm.nodeManager.functionlist.at(y).mynum != fid) {
 						// Only swap functions with the same number of inputs
-						if (gm.nodeManager.functionlist.at(y)._inputs == gm.nodeManager.functionlist.at(fid)._inputs ) {
-							tmp_rpn_vec.at(x).fNo  = gm.nodeManager.functionlist.at(y)._mynum;
+						if (gm.nodeManager.functionlist.at(y).inputs == gm.nodeManager.functionlist.at(fid).inputs ) {
+							tmp_rpn_vec.at(x).fNo  = gm.nodeManager.functionlist.at(y).mynum;
 							double tmp_score = scoreRpnVec(tmp_rpn_vec,oms.curr_score);
 							// If we have an improvement, add it
 							if (tmp_score < oms.curr_score) {

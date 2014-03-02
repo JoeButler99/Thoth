@@ -253,11 +253,11 @@ void EvolutionManager::mutateSingleNode(int num_needed, int pool_size) {
 				int new_f;
 				while (true) {
 					new_f = rng.iRand(gm.nodeManager.functionlist.size());
-					if (new_f != p.rpnNodeVec.at(edit_node).fNo && gm.nodeManager.functionlist.at(new_f)._inputs == p.rpnNodeVec.at(edit_node).fInputs) {
+					if (new_f != p.rpnNodeVec.at(edit_node).fNo && gm.nodeManager.functionlist.at(new_f).inputs == p.rpnNodeVec.at(edit_node).fInputs) {
 						break;
 					}
 				}
-				p.rpnNodeVec.at(edit_node).fNo = gm.nodeManager.functionlist.at(new_f)._mynum;
+				p.rpnNodeVec.at(edit_node).fNo = gm.nodeManager.functionlist.at(new_f).mynum;
 			}
 
 			// Assign the new member and put it into the population

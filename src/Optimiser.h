@@ -54,7 +54,7 @@ public:
 		// Loop all fitness cases
 		double score;
 		for (unsigned int y = 0; y < gm.fitnessCases.TOTAL_CASES; y++) {
-			double result = PopulationMember::solveVecCaseSet(&gm.fitnessCases.cases[y][0],rpn_vec);
+			double result = PopulationMember::rpnVecSolve(&gm.fitnessCases.cases[y][0],rpn_vec);
 
 				score = result - gm.fitnessCases.targets[y];
 				if (score < 0.0) { score *= -1.0;}

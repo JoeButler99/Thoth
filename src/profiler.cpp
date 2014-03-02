@@ -49,7 +49,7 @@
 int reps;
 int totalMicroSeconds;
 int dummyInt; // Use this to stop some functions thinking we do nothing
-Function gFunc("Fadd",2,0);
+Function gFunc("Fadd",2,0,rpnAdd);
 PopulationMember standardPopMem;
 FILE * stdOutPtr;
 

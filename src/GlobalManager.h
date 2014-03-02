@@ -31,15 +31,18 @@
 #include "ArgParser.h"
 #include "JsonConfigLoader.h"
 #include "Settings.h"
-#include "NodeManager.h"
-#include "PopulationMember.h"
+//#include "NodeManager.h"
+//#include "PopulationMember.h"
 
 
 // Forward Declarations
 class FitnessCases;
+class NodeManager;
 class PopulationManager;
 class Optimiser;
 class EvolutionManager;
+class PopulationMember;
+
 
 
 // Global manager exists to hold together what were previously held in single global objects

@@ -1,8 +1,9 @@
 /*
- * NodeManager.cpp
+ * FunctionSet.cpp
  *
- *  Created on: 4 May 2013
+ *  Created on: 1 Mar 2014
  *      Author: joe
+ *
 
     Copyright (C) 2013-2014 Joe Butler
     This file is part of Thoth.
@@ -22,35 +23,9 @@
 
  */
 
-#include "NodeManager.h"
+#include "FunctionSet.h"
 
+FunctionSet::FunctionSet(std::string n) : name(n) {}
+FunctionSet::~FunctionSet() {}
 
-NodeManager::NodeManager() { }
-
-NodeManager::~NodeManager() {}
-
-void NodeManager::setupSelf() {
-	initFunctions();
-}
-
-
-void NodeManager::initFunctions() {
-	// Try to find the function set from the settings and load it into the function list
-
-	bool found = false;
-	FunctionSet::buildFunctionSets();
-	for (unsigned x = 0; x < FunctionSet::functionSets.size(); x++) {
-		if (FunctionSet::functionSets.at(x).name == gm.settings.FUNCTION_SET) {
-			functionlist = FunctionSet::functionSets.at(x).functionList;
-			found = true;
-			break;
-		}
-	}
-
-	if (!found) {
-		std::cout << "Could not find FUNCTION_SET named: " << gm.settings.FUNCTION_SET << std::endl;
-		exit(6);
-	}
-
-}
-
+std::vector<FunctionSet> FunctionSet::functionSets;

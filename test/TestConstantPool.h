@@ -217,7 +217,7 @@ protected:
 			std::string last_consts = "";
 			bool found_consts = false;
 			for (lines = 0; std::getline(ifile, line); ++lines) {
-				if (lines == 4) {
+				if (lines == 5) {
 					CPPUNIT_ASSERT(line.substr(0,10) == "CONSTANTS ");
 					found_consts = true;
 					if (first) {

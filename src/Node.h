@@ -39,8 +39,8 @@ public:
 
 	inline void setFromFunc (Function & f) {
 		isTerminal = false;
-		fNo 	= f._mynum;
-		fInputs = f._inputs;
+		fNo 	= f.mynum;
+		fInputs = f.inputs;
 	}
 
 	inline void setTerminal (int t) {

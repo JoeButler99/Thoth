@@ -26,7 +26,7 @@
 
 
 
-Node::Node(Function & f) :  fNo(f._mynum), fInputs(f._inputs), tNo(0) , isTerminal(false){}
+Node::Node(Function & f) :  fNo(f.mynum), fInputs(f.inputs), tNo(0) , isTerminal(false){}
 
 Node::Node(int t) : fNo(-2), fInputs(1), tNo(t), isTerminal(true) {}
 

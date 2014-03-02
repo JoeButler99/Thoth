@@ -8,6 +8,7 @@
 	//		Run Configuration
 	//
 	// What is the location of the case file to load. 
+	"FUNCTION_SET"              : "FinanceFull",                 // Which functions should we use                  
 	"FITNESS_CASE_FILE"         : "fitness_cases/testSinx_20c",  // Fitness cases to load
 	"POPULATION"                : 800,  // What size to create the population
 	"KEEP_TOP_PERCENT"          : 25,    // What percentage of members to keep until the next generation
@@ -23,7 +24,7 @@
 	//
 	"SAVE_EVERY"                : 2,     // How often should we dump the progress into the nodetree files
 	"SAVE_TOTAL"                : 5,     // Save up to how many nodetrees
-        "SAVE_FILE_PREFIX"          : "unit-test-nodetree", // What prefix to use for saving program members
+    "SAVE_FILE_PREFIX"          : "unit-test-nodetree", // What prefix to use for saving program members
 	"SAVE_AFTER_EACH_OPTIMISE"  : true,  // Optimisation can take a long time - save it!
 	"LOAD_SAVED"                : true,  // Try to load saved nodetrees at startup
 	"LOAD_TOTAL"                : 5,     // Try to lado up to how many nodetrees
