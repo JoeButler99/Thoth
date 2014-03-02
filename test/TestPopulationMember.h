@@ -144,10 +144,11 @@ protected:
 		double result = 9999999;
 		result = p.rpnVecSolveSelf(testVars);
 		CPPUNIT_ASSERT(result != 9999999);
-
 		result = 9999999;
-		p.createSelf("TestCase2",3);
-		result = p.rpnVecSolveSelf(testVars);
+
+		PopulationMember p2;
+		p2.createSelf("TestCase2",3);
+		result = p2.rpnVecSolveSelf(testVars);
 		CPPUNIT_ASSERT(result != 9999999);
 	}
 

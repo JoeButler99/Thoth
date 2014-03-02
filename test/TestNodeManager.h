@@ -121,7 +121,7 @@ protected:
 
 		f = nm.getFunctionByNum(12);
 		CPPUNIT_ASSERT(f.inputs == 4);
-		CPPUNIT_ASSERT(f.name == "Min 4");
+		CPPUNIT_ASSERT(f.name == "Min4");
 	}
 };
 

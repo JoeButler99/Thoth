@@ -151,9 +151,10 @@ inline void rpnToInt(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 
 inline void rpnSquareRoot(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 	highest --;
-	if (rpnStack[highest] > 0.0) {
-		rpnStack[highest] =  sqrt(rpnStack[highest]);
+	if (rpnStack[highest] < 0.0) {
+		rpnStack[highest] = 0 - rpnStack[highest];
 	}
+	rpnStack[highest] =  sqrt(rpnStack[highest]);
 }
 
 inline void rpnIfV1(double rpnStack[RPN_STACK_LIMIT],int & highest) {

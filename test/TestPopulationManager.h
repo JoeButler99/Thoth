@@ -238,7 +238,7 @@ protected:
 			std::ifstream ifile(saveName);
 			CPPUNIT_ASSERT(ifile);
 			unsigned lines = std::count(std::istreambuf_iterator<char>(ifile), std::istreambuf_iterator<char>(), '\n');
-			CPPUNIT_ASSERT(lines == gm.populationManager.populationlist.v.at(x).rpnNodeVec.size() + 4);
+			CPPUNIT_ASSERT(lines == gm.populationManager.populationlist.v.at(x).rpnNodeVec.size() + 5);
 			CPPUNIT_ASSERT(remove(saveName) == 0);
 		}
 	}
