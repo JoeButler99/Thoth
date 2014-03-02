@@ -180,7 +180,7 @@ class PyDot:
     def add_node(self,line):
         cleaned = line.strip()
         depth , name , is_terminal = nt.get_node(line)
-        if cleaned[0] == 'F':
+        if cleaned[0] == 'F' and cleaned[1] != 'U':
             n = pydot.Node(self.node_no, label=name,style="filled",fillcolor="green")
             self.parents[0] = n
             self.graph.add_node(n)

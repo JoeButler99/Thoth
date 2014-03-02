@@ -136,10 +136,12 @@ After a couple of loops you will notice this 'gets stuck'. It also kept a small 
  
  * Thoth can now use the generated structure to make guesses outside of the test case range. Try the following to see how it scores
 
-    bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 10
+<pre>
+    bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 10   
     bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables -10
     bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 50
     bin/Thoth --action solve --num-vars 1 --nodetree nodetree.0 --case-variables 999
+</pre>
 
 You can find the real answers with sin x on a calculator. Google also has the answers!
 
