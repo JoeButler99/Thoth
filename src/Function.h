@@ -31,7 +31,6 @@
 #include "Globals.h"
 
 
-
 class Function {
 public:
 	std::string name;

@@ -33,6 +33,7 @@
 #include <math.h>
 #include "../src/Function.h"
 #include "../src/Node.h"
+#include "../src/RPNActions.h"
 
 class TestNode : public CppUnit::TestFixture {
 public:
@@ -53,7 +54,7 @@ public:
 protected:
 	void testCustomConstructor1() {
 		std::cerr << "Node:\t\t\t" <<  __func__ << std::endl;
-		Function f("Merp",2,10);
+		Function f("Merp",2,10,rpnAdd);
 		Node n(f);
 
 		CPPUNIT_ASSERT(n.fInputs ==2);
@@ -80,7 +81,7 @@ protected:
 		Node n(5);
 		CPPUNIT_ASSERT(n.tNo == 5);
 		CPPUNIT_ASSERT(n.isTerminal == true);
-		Function f("Merp",2,10);
+		Function f("Merp",2,10,rpnAdd);
 		n.setFromFunc(f);
 
 		CPPUNIT_ASSERT(n.fInputs ==2);
@@ -91,7 +92,7 @@ protected:
 
 	void testSetTerminal() {
 		std::cerr << "Node:\t\t\t" <<  __func__ << std::endl;
-		Function f("Merp",2,10);
+		Function f("Merp",2,10,rpnAdd);
 		Node n(f);
 
 		CPPUNIT_ASSERT(n.fInputs ==2);
