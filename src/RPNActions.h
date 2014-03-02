@@ -226,19 +226,21 @@ inline void rpnNegate(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 
 inline void rpnRaiseE(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 	highest --;
-	if ( rpnStack[highest] == 0.0) { break;}
-	if ( rpnStack[highest] < 0) {
-		rpnStack[highest] = 0 - pow(0- rpnStack[highest],EULER);
-	} else {
-		rpnStack[highest] = pow( rpnStack[highest],EULER);
+	if ( rpnStack[highest] != 0.0) {
+		if ( rpnStack[highest] < 0) {
+			rpnStack[highest] = 0 - pow(0- rpnStack[highest],EULER);
+		} else {
+			rpnStack[highest] = pow( rpnStack[highest],EULER);
+		}
 	}
 }
 
 inline void rpnLnE(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 	highest --;
-	if(rpnStack[highest] == 0.0) { rpnStack[highest] = 0; break;}
-	if(rpnStack[highest] < 0) {  rpnStack[highest] = 0 - log(0 - rpnStack[highest]); }
-	else { rpnStack[highest] = log(rpnStack[highest]);	}
+	if(rpnStack[highest] != 0.0) {
+		if(rpnStack[highest] < 0) {  rpnStack[highest] = 0 - log(0 - rpnStack[highest]); }
+		else { rpnStack[highest] = log(rpnStack[highest]);	}
+	}
 }
 
 

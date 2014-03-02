@@ -8,6 +8,7 @@
 	//		Run Configuration
 	//
 	// What is the location of the case file to load. 
+	"FUNCTION_SET"              : "FinanceFull",                    // Which functions should we use
 	"FITNESS_CASE_FILE"         : "fitness_cases/large_test_case",  // Fitness cases to load
 	"POPULATION"                : 8000,  // What size to create the population
 	"KEEP_TOP_PERCENT"          : 25,    // What percentage of members to keep until the next generation

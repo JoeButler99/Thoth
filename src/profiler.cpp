@@ -84,9 +84,7 @@ void setup(int argc, char **argv){
 	standardPopMem.method = "fill";
 	standardPopMem.rpnNodeVec.push_back(Node(1,true));
 	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(0)));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(1)));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(2)));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(3)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(16)));
 	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(1)));
 	standardPopMem.rpnNodeVec.push_back(Node(4));
 	standardPopMem.rpnNodeVec.push_back(Node(7));
@@ -97,9 +95,11 @@ void setup(int argc, char **argv){
 	standardPopMem.rpnNodeVec.push_back(Node(19));
 	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(0)));
 	standardPopMem.rpnNodeVec.push_back(Node(22));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(2)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(17)));
 	standardPopMem.rpnNodeVec.push_back(Node(25));
 	standardPopMem.rpnNodeVec.push_back(Node(28));
+	standardPopMem.rpnNodeVec.push_back(Node(31));
+	standardPopMem.rpnNodeVec.push_back(Node(34));
 	standardPopMem.hasChanged = true;
 	gm.populationManager.populationlist.add(standardPopMem);
 	gm.populationManager.scoreOneMember(0);
