@@ -47,16 +47,8 @@ struct Optimiser_mutex_stats {
 	std::vector<Node> tmp_rpn_tree;
 	//pthread_mutex_t m_tmp_rpn_tree;
 	pthread_mutex_t m_curr_score;
-//	pthread_mutex_t m_best_term;
-//	pthread_mutex_t m_best_func;
-//	pthread_mutex_t m_improvement;
-
 	Optimiser_mutex_stats() : curr_score(0), start_score(0), best_term(0), best_func(0), improvement(false) {
 		if (pthread_mutex_init(&m_curr_score, NULL) != 0) { printf("\n mutex init failed\n"); }
-//		if (pthread_mutex_init(&m_best_term, NULL) != 0) { printf("\n mutex init failed\n"); }
-//		if (pthread_mutex_init(&m_best_func, NULL) != 0) { printf("\n mutex init failed\n"); }
-//		if (pthread_mutex_init(&m_improvement, NULL) != 0) { printf("\n mutex init failed\n"); }
-//		if (pthread_mutex_init(&m_tmp_rpn_tree, NULL) != 0) { printf("\n mutex init failed\n"); }
 	}
 
 	void update(double score,int term, int func) {
@@ -73,16 +65,12 @@ struct Optimiser_mutex_stats {
 
 	void update(double score,std::vector<Node> & trt, int bestTerm ){
 		pthread_mutex_lock(&m_curr_score);
-//		pthread_mutex_lock(&m_tmp_rpn_tree);
-//		pthread_mutex_lock(&m_best_term);
 		if (score < curr_score) {
 			curr_score = score;
 			improvement = true;
 			tmp_rpn_tree = trt;
 			best_term = bestTerm;
 		}
-//		pthread_mutex_unlock(&m_best_term);
-//		pthread_mutex_unlock(&m_tmp_rpn_tree);
 		pthread_mutex_unlock(&m_curr_score);
 	}
 };
