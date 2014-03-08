@@ -41,11 +41,11 @@ public:
 	TvectorPM populationlist;
 	PopulationManager();
 	~PopulationManager();
-	void generateRequired();
 	int pos; // Cheat int for recursion tracking
 	double cutScore; // We can stop scoring in certain conditions
 	int	   missedCut;
 
+	void generateRequired();
 	void scoreAllVecRpn();
 	void sortByScore();
 	void cullWeak();

@@ -62,11 +62,17 @@ public:
 	RNG(double dmin, double dmax);
 	~RNG();
 
-	// TODO - Should everything move inline here
-	bool bRand();
+	inline bool bRand() {
+		return (int_generator.at(omp_get_thread_num())() % 2);
+	}
 
-	double dRand();
-	double dRand(double min, double max);
+	inline double dRand() {
+		return double_generator.at(omp_get_thread_num())();
+	}
+
+	inline double dRand(double min, double max) {
+		return (double_generator.at(omp_get_thread_num())() * (fabs(min - max) / fabs(dMin - dMax))) + min;
+	}
 
 	inline int iRand() {
 		return (int_generator.at(omp_get_thread_num())() % iMax) + iMin;

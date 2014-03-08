@@ -4,7 +4,6 @@
  *  Created on: 19 Oct 2013
  *      Author: joe
  *
- * 		* TODO - Many functions from here can be removed
 
     Copyright (C) 2013-2014 Joe Butler
     This file is part of Thoth.
@@ -75,88 +74,6 @@ inline std::string display_bool(bool input) {
 		return "false";
 	}
 }
-
-
-//inline bool askYesNo(const std::string& question) {
-//	//std::cout << question << std::endl;
-//	question_msg(question);
-//	std::string input;
-//	question_msg("(yes / no): ");
-//	while (true) {
-//		std::getline(std::cin,input);
-//		std::transform(input.begin(),input.end(),input.begin(),::tolower);
-//		if ( input == "yes" || input == "y") {
-//			std::cout << std::endl << std::endl;
-//			return true;
-//		}
-//		if ( input == "no" || input == "n") {
-//			std::cout << std::endl << std::endl;
-//			return false;
-//		}
-//	}
-//	return false;
-//}
-//
-//
-//inline bool askDefaultOther(const std::string& question,const std::string& defaultAction) {
-//	//std::cout << question << std::endl;
-//	question_msg(question);
-//	std::string input;
-//
-//	question_msg("("+defaultAction +"): ");
-//	std::cin.ignore();
-//	std::getline(std::cin,input);
-//	std::transform(input.begin(),input.end(),input.begin(),::tolower);
-//	if ( input == "") {
-//		std::cout << std::endl << std::endl;
-//		return true;
-//	} else {
-//		return false;
-//	}
-//}
-//
-//inline int getIntFromUser(const std::string& question) {
-//	question_msg(question);
-//	int result;
-//	std::cin >> result;
-//	std::cout << std::endl;
-//	return result;
-//}
-//
-//
-//inline void setFileName(const std::string & prompt,const std::string & prefix,std::string & filename) {
-//	std::string temp;
-//	std::cout << prompt << std::endl;
-//	std::cin >> temp;
-//	filename = prefix + temp;
-//}
-//
-//
-//inline std::string pickFile(std::vector<fs::path> files) {
-//	while (true) {
-//		// Make a temporary 'menu' for the user to select a file
-//		std::cout << "\n\nChoose File: " << std::endl;
-//		for (unsigned x = 0; x < files.size(); x++) {
-//			std::cout << x+1 << ") " << files.at(x).string() << std::endl;
-//		}
-//
-//		std::cout << "\n( Enter 0 to Abort )" << std::endl;
-//		// Now wait for the user selection
-//		unsigned choice;
-//		question_msg("\n\nSelect Choice: ");
-//		std::cin >> choice;
-//		std::cout << std::endl;
-//
-//		if (choice == 0) {
-//			return "";
-//		} else if(choice -1 >= files.size() || choice < 0) {
-//			std::cout << "INVALID SELECTION" << std::endl;
-//		} else {
-//			return files.at(choice-1).string();
-//		}
-//	}
-//	return "";
-//}
 
 
 #endif /* GUIFUNCTIONS_H_ */

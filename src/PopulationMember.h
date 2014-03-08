@@ -43,6 +43,7 @@ public:
 
 	PopulationMember();
 	PopulationMember(std::vector<Node> inputVec);
+	PopulationMember(std::string m,int depth);
 
 	void createSelf(std::string m,int depth);
 	void fillRandomNodes(int max_depth);

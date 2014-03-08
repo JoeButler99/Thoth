@@ -47,14 +47,11 @@ void PopulationManager::generateRequired() {
 	{
 #pragma omp for schedule(dynamic) nowait
 		for (int x = 0; x < missing; x++) {
-			PopulationMember p;
 			if (x < (missing / 2)) {
-				p.createSelf("fill",gm.settings.INITIAL_MAX_DEPTH);
+				populationlist.add(PopulationMember("fill",gm.settings.INITIAL_MAX_DEPTH));
 			} else {
-				p.createSelf("grow",gm.settings.INITIAL_MAX_DEPTH);
+				populationlist.add(PopulationMember("grow",gm.settings.INITIAL_MAX_DEPTH));
 			}
-			p.hasChanged = true;
-			populationlist.add(p);
 		}
 		if (missing > 0 ) {
 			//printf(" * Generated %d new population members. \n",missing);
@@ -236,7 +233,6 @@ void PopulationManager::writeGuesses() {
 }
 
 
-// TODO - This could probably be re-written with something like google protocol buffers
 void PopulationManager::loadMemberFromFilename(const char * filename) {
 	std::ifstream loadfile(filename);
 	std::vector<Node> rpn_node_vec;

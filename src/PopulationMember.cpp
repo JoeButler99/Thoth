@@ -25,32 +25,31 @@
 #include "PopulationMember.h"
 
 
-PopulationMember::PopulationMember() : method("None"), hasChanged(true), score(-1) { }
+PopulationMember::PopulationMember() : method("None"), hasChanged(true), score(-1) {}
 
 // This Constructor helps speed up the evolutions methods with copy an existing member
 PopulationMember::PopulationMember(std::vector<Node> inputVec)
-: method("RPN-Copy"), hasChanged(true), score(-1), rpnNodeVec(inputVec) {
+: method("RPN-Copy"), hasChanged(true), score(-1), rpnNodeVec(inputVec) {}
+
+
+PopulationMember::PopulationMember(std::string m,int depth) : method("m"), hasChanged(true), score(-1) {
+	createSelf(m,depth);
 }
+
 
 void PopulationMember::createSelf(std::string m,int depth) {
 	hasChanged = true;
 	method = m;
-	//rpn_node_vec.clear();
-	Node n(1,true);
 	// Build this population member
-	rpnNodeVec.push_back(n);
-	for (unsigned int x = 0; x < n.fInputs; x++) {
-		fillRandomNodes(depth);
-	}
+	rpnNodeVec.push_back(Node(1,true));
+	fillRandomNodes(depth);
 }
 
 void PopulationMember::fillRandomNodes(int max_depth) {
 	// We always return a terminal node if we are out of depth,
 	// or if we are on the grow method and we pass a 1/5 test
 	if (( max_depth == 0 ) || ((method == "grow") && (rng.iRand(100) % 5 == 0))){
-		// TODO - move the node into the push back
-		Node n(rng.iRand(gm.fitnessCases.TERMINALS));
-		rpnNodeVec.push_back(n);
+		rpnNodeVec.push_back(Node(rng.iRand(gm.fitnessCases.TERMINALS)));
 	} else {
 		Node n(gm.nodeManager.giveRandFunction());
 		rpnNodeVec.push_back(n);
