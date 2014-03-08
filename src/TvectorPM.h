@@ -32,7 +32,7 @@
 class TvectorPM {
 public:
 	pthread_mutex_t lock;
-	std::vector<PopulationMember> v; // TODO - should this become a reference
+	std::vector<PopulationMember> v;
 
 	TvectorPM();
 	~TvectorPM();

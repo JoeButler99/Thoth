@@ -158,7 +158,6 @@ bool FitnessCases::loadFile(std::string inputfile) {
 
 
 void FitnessCases::updateConstantSet(ConstantPool newCP) {
-	// TODO - We might not need this conditional here
 	if (newCP.constantSet.size() == cp.constantSet.size()) {
 		cp = newCP;
 		for (unsigned x = 0; x < cases.size(); x++) {
