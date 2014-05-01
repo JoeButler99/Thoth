@@ -60,6 +60,22 @@ public:
 		basicP.functionList.push_back(Function("Flip",1,8,rpnNegate));
 		functionSets.push_back(basicP);
 
+		FunctionSet basicPP("Basic++");
+		basicPP.functionList.push_back(Function("Add",2,0,rpnAdd));
+		basicPP.functionList.push_back(Function("Subtract",2,1,rpnSubtract));
+		basicPP.functionList.push_back(Function("Multiply",2,2,rpnMultiply));
+		basicPP.functionList.push_back(Function("Divide",2,3,rpnDivide));
+		basicPP.functionList.push_back(Function("IFv1",4,4,rpnIfV1));
+		basicPP.functionList.push_back(Function("AVG4",4,5,rpnAvgOf4));
+		basicPP.functionList.push_back(Function("PercentChg",2,6,rpnPercentChange));
+		basicPP.functionList.push_back(Function("Flip",1,7,rpnNegate));
+		basicPP.functionList.push_back(Function("Min2",2,8,rpnMinOf2));
+		basicPP.functionList.push_back(Function("AVG2",2,9,rpnAvgOf2));
+		basicPP.functionList.push_back(Function("AbsSum2",2,10,rpnAbsSum2));
+		basicPP.functionList.push_back(Function("AbsMax4",4,11,rpnAbsMax4));
+		basicPP.functionList.push_back(Function("IntMe",1,12,rpnToInt));
+		functionSets.push_back(basicPP);
+
 
 		FunctionSet financeFull("FinanceFull");
 		financeFull.functionList.push_back(Function("Add",2,0,rpnAdd));
