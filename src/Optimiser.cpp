@@ -109,7 +109,7 @@ bool Optimiser::branchCutter(PopulationMember & p) {
 #pragma omp parallel
 			{
 #pragma omp for schedule(static)
-				for (unsigned int y = 0; y < gm.fitnessCases.TERMINALS; y ++) {
+				for (unsigned int y = 0; y < gm.fitnessCases->TERMINALS; y ++) {
 					// Copy and edit the vector
 					std::vector<Node> tmp_rpn_vec(p.rpnNodeVec);
 
@@ -169,7 +169,7 @@ bool Optimiser::terminalSwapper(PopulationMember & p) {
 #pragma omp parallel
 		    {
 #pragma omp for schedule(static)
-				for (unsigned int y = 0; y < gm.fitnessCases.TERMINALS; y ++) {
+				for (unsigned int y = 0; y < gm.fitnessCases->TERMINALS; y ++) {
 					if (y != tid) { // Don't score ourself!
 						// Copy and edit the vector
 						std::vector<Node> tmp_rpn_vec(p.rpnNodeVec);
@@ -227,11 +227,11 @@ bool Optimiser::functionSwapper(PopulationMember & p) {
 #pragma omp parallel
 		    {
 #pragma omp for schedule(dynamic)
-				for (unsigned int y = 0; y < gm.nodeManager.functionlist.size(); y ++) {
-					if ((int)gm.nodeManager.functionlist.at(y).mynum != fid) {
+				for (unsigned int y = 0; y < gm.nodeManager->functionlist.size(); y ++) {
+					if ((int)gm.nodeManager->functionlist.at(y).mynum != fid) {
 						// Only swap functions with the same number of inputs
-						if (gm.nodeManager.functionlist.at(y).inputs == gm.nodeManager.functionlist.at(fid).inputs ) {
-							tmp_rpn_vec.at(x).fNo  = gm.nodeManager.functionlist.at(y).mynum;
+						if (gm.nodeManager->functionlist.at(y).inputs == gm.nodeManager->functionlist.at(fid).inputs ) {
+							tmp_rpn_vec.at(x).fNo  = gm.nodeManager->functionlist.at(y).mynum;
 							double tmp_score = scoreRpnVec(tmp_rpn_vec,oms.curr_score);
 							// If we have an improvement, add it
 							if (tmp_score < oms.curr_score) {
@@ -268,40 +268,40 @@ bool Optimiser::functionSwapper(PopulationMember & p) {
 // Run all optimisation loops in sequence
 void Optimiser::optimise(int generation, bool save) {
 
-	if (generation % gm.settings.OPTIMISE_CUTTER_EVERY == 0) {
-		if (gm.settings.ITERATE_CUTTER) {
+	if (generation % gm.settings->OPTIMISE_CUTTER_EVERY == 0) {
+		if (gm.settings->ITERATE_CUTTER) {
 			bool improve_tree = true;
 			while(improve_tree) {
-				improve_tree = branchCutter(gm.populationManager.populationlist.v.at(0));
+				improve_tree = branchCutter(gm.populationManager->populationlist.v.at(0));
 			}
 		} else {
-			branchCutter(gm.populationManager.populationlist.v.at(0));
+			branchCutter(gm.populationManager->populationlist.v.at(0));
 		}
-		if (save) { gm.populationManager.writeMembersToDisk();}
+		if (save) { gm.populationManager->writeMembersToDisk();}
 	}
 
-	if (generation % gm.settings.OPTIMISE_TERMINALS_EVERY == 0) {
-		if (gm.settings.ITERATE_TERMINALS) {
+	if (generation % gm.settings->OPTIMISE_TERMINALS_EVERY == 0) {
+		if (gm.settings->ITERATE_TERMINALS) {
 			bool improve_terminals = true;
 			while(improve_terminals) {
-				improve_terminals = terminalSwapper(gm.populationManager.populationlist.v.at(0));
+				improve_terminals = terminalSwapper(gm.populationManager->populationlist.v.at(0));
 			}
 		} else {
-			terminalSwapper(gm.populationManager.populationlist.v.at(0));
+			terminalSwapper(gm.populationManager->populationlist.v.at(0));
 		}
-		if (save) { gm.populationManager.writeMembersToDisk();}
+		if (save) { gm.populationManager->writeMembersToDisk();}
 	}
 
-	if (generation % gm.settings.OPTIMISE_FUNCTIONS_EVERY == 0) {
-		if (gm.settings.ITERATE_FUNCTIONS) {
+	if (generation % gm.settings->OPTIMISE_FUNCTIONS_EVERY == 0) {
+		if (gm.settings->ITERATE_FUNCTIONS) {
 			bool improve_functions = true;
 			while(improve_functions) {
-				improve_functions = functionSwapper(gm.populationManager.populationlist.v.at(0));
+				improve_functions = functionSwapper(gm.populationManager->populationlist.v.at(0));
 			}
 		} else {
-			functionSwapper(gm.populationManager.populationlist.v.at(0));
+			functionSwapper(gm.populationManager->populationlist.v.at(0));
 		}
-		if (save) { gm.populationManager.writeMembersToDisk();}
+		if (save) { gm.populationManager->writeMembersToDisk();}
 	}
 }
 

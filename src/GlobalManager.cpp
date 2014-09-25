@@ -24,34 +24,49 @@
 
 #include "GlobalManager.h"
 
-GlobalManager::GlobalManager(ArgParser & argParser,JsonConfigLoader & jsonConfig,Settings & settings,
-		  FitnessCases & fitnessCases,NodeManager & nodeManager,PopulationManager & populationManager,
-		  Optimiser & optimiser,EvolutionManager & evolutionManager ) :
-argParser(argParser),
-jsonConfig(jsonConfig),
-settings(settings),
-fitnessCases(fitnessCases),
-nodeManager(nodeManager),
-populationManager(populationManager),
-optimiser(optimiser),
-evolutionManager(evolutionManager)
-{}
-
+//GlobalManager::GlobalManager(ArgParser & argParser,JsonConfigLoader & jsonConfig,Settings & settings,
+//		  FitnessCases & fitnessCases,NodeManager & nodeManager,PopulationManager & populationManager,
+//		  Optimiser & optimiser,EvolutionManager & evolutionManager ) :
+//argParser(argParser),
+//jsonConfig(jsonConfig),
+//settings(settings),
+//fitnessCases(fitnessCases),
+//nodeManager(nodeManager),
+//populationManager(populationManager),
+//optimiser(optimiser),
+//evolutionManager(evolutionManager)
+//{}
+GlobalManager gm;
+GlobalManager::GlobalManager() {}
 GlobalManager::~GlobalManager() {}
 
-void GlobalManager::loadSettings(int argc, char* argv[],bool profiling) {
-	if (!profiling) { argParser.loadArgs(argc,argv); }
+void GlobalManager::initialise(ArgParser * ap,JsonConfigLoader * jcl,Settings * s,
+				  FitnessCases * fc,NodeManager * nm,PopulationManager * pm,
+				  Optimiser * o,EvolutionManager * em) {
+	argParser         = ap;
+	jsonConfig        = jcl;
+	settings          = s;
+	fitnessCases      = fc;
+	nodeManager       = nm;
+	populationManager = pm;
+	optimiser         = o;
+	evolutionManager  = em;
+}
 
-	if (argParser.action == "solve") {
+
+void GlobalManager::loadSettings(int argc, char* argv[],bool profiling) {
+	if (!profiling) { argParser->loadArgs(argc,argv); }
+
+	if (argParser->action == "solve") {
 		// Nothing to do here. (for now)
 	} else {
-		jsonConfig.loadFile(argParser.configFile);
-		jsonConfig.updateSettings(settings);
+		jsonConfig->loadFile(argParser->configFile);
+		jsonConfig->updateSettings(settings);
 
 		// Args can override some settings from the config
 		if (!profiling) {
-			if (argParser.fitnessCases != "") {
-				settings.FITNESS_CASE_FILE.assign(argParser.fitnessCases);
+			if (argParser->fitnessCases != "") {
+				settings->FITNESS_CASE_FILE.assign(argParser->fitnessCases);
 			}
 		}
 	}

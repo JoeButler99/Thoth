@@ -26,10 +26,10 @@
 #define POPULATIONMEMBER_H_
 #include <vector>
 #include <string>
+#include "Globals.h"
 #include "Node.h"
 #include "Function.h"
 #include "RNG.h"
-#include "GlobalManager.h"
 #include "FitnessCases.h"
 #include "NodeManager.h"
 
@@ -63,7 +63,7 @@ public:
 				rpnStack[highest] = var_set[rpnNodeVec[x].tNo];
 				highest ++;
 			} else {
-				gm.nodeManager.functionlist.at(rpnNodeVec[x].fNo).action(rpnStack,highest);
+				gm.nodeManager->functionlist.at(rpnNodeVec[x].fNo).action(rpnStack,highest);
 				highest ++;
 			}
 		}
@@ -79,7 +79,7 @@ public:
 				rpnStack[highest] = var_set[rpnNodeVec[x].tNo];
 				highest ++;
 			} else {
-				gm.nodeManager.functionlist.at(rpnNodeVec[x].fNo).action(rpnStack,highest);
+				gm.nodeManager->functionlist.at(rpnNodeVec[x].fNo).action(rpnStack,highest);
 				highest ++;
 			}
 		}

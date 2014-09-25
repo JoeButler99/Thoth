@@ -49,9 +49,9 @@ void PopulationMember::fillRandomNodes(int max_depth) {
 	// We always return a terminal node if we are out of depth,
 	// or if we are on the grow method and we pass a 1/5 test
 	if (( max_depth == 0 ) || ((method == "grow") && (rng.iRand(100) % 5 == 0))){
-		rpnNodeVec.push_back(Node(rng.iRand(gm.fitnessCases.TERMINALS)));
+		rpnNodeVec.push_back(Node(rng.iRand(gm.fitnessCases->TERMINALS)));
 	} else {
-		Node n(gm.nodeManager.giveRandFunction());
+		Node n(gm.nodeManager->giveRandFunction());
 		rpnNodeVec.push_back(n);
 		for (unsigned int x = 0; x < n.fInputs; x++) {
 			fillRandomNodes(max_depth -1);
@@ -60,8 +60,8 @@ void PopulationMember::fillRandomNodes(int max_depth) {
 }
 
 void PopulationMember::setScore(double s) {
-	if (gm.settings.NODE_WEIGHT != 0.0 ) {
-		score = s + (rpnNodeVec.size() *  gm.settings.NODE_WEIGHT);
+	if (gm.settings->NODE_WEIGHT != 0.0 ) {
+		score = s + (rpnNodeVec.size() *  gm.settings->NODE_WEIGHT);
 	} else {
 		score = s;
 	}

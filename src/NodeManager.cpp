@@ -40,7 +40,7 @@ void NodeManager::initFunctions() {
 	bool found = false;
 	FunctionSet::buildFunctionSets();
 	for (unsigned x = 0; x < FunctionSet::functionSets.size(); x++) {
-		if (FunctionSet::functionSets.at(x).name == gm.settings.FUNCTION_SET) {
+		if (FunctionSet::functionSets.at(x).name == gm.settings->FUNCTION_SET) {
 			functionlist = FunctionSet::functionSets.at(x).functionList;
 			found = true;
 			break;
@@ -48,7 +48,7 @@ void NodeManager::initFunctions() {
 	}
 
 	if (!found) {
-		std::cout << "Could not find FUNCTION_SET named: " << gm.settings.FUNCTION_SET << std::endl;
+		std::cout << "Could not find FUNCTION_SET named: " << gm.settings->FUNCTION_SET << std::endl;
 		exit(6);
 	}
 

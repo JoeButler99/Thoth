@@ -18,7 +18,6 @@
 //#include "NodeManager.h"
 //#include "Optimiser.h"
 //#include "EvolutionManager.h"
-//#include "GlobalManager.h"
 //#
 
 

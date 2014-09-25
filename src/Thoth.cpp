@@ -37,12 +37,14 @@
 #include <sys/time.h>   // Timer funcions
 #include <ctime>
 #include <cstring>
+//#include "Globals.h"
 #include "Settings.h"
 #include "JsonConfigLoader.h"
 #include "PopulationManager.h"
 #include "Optimiser.h"
 #include "EvolutionManager.h"
 #include "GlobalManager.h"
+
 
 
 
@@ -93,41 +95,40 @@ NodeManager nm;
 PopulationManager pm;
 Optimiser o;
 EvolutionManager em;
-GlobalManager gm = GlobalManager(ap,jcl,settings,fc,nm,pm,o,em);
 
 
 int main(int argc, char* argv[]) {
-
+	gm.initialise(&ap,&jcl,&settings,&fc,&nm,&pm,&o,&em);
 	gm.loadSettings(argc,argv);
 
-	if (gm.argParser.action == "solve") {
+	if (gm.argParser->action == "solve") {
 
-		gm.fitnessCases.loadString(gm.argParser.caseVars.c_str(),gm.argParser.numVars);
-		gm.nodeManager.setupSelf();
-		gm.populationManager.loadMemberFromFilename(gm.argParser.nodetree.c_str());
-		gm.fitnessCases.addConstantsToCliCase(); // Does nothing if no constants
+		gm.fitnessCases->loadString(gm.argParser->caseVars.c_str(),gm.argParser->numVars);
+		gm.nodeManager->setupSelf();
+		gm.populationManager->loadMemberFromFilename(gm.argParser->nodetree.c_str());
+		gm.fitnessCases->addConstantsToCliCase(); // Does nothing if no constants
 
-		double result = gm.populationManager.solveVecCaseSet(0);
+		double result = gm.populationManager->solveVecCaseSet(0);
 		std::cout << result << std::endl;
 		return 0;
 
-	} else if(gm.argParser.action == "improve") {
+	} else if(gm.argParser->action == "improve") {
 		//
 		//		Main Improver loop
 		//
 		std::cout << welcome_text <<std::endl;
-		gm.argParser.displayArgs();
-		gm.settings.displaySettings();
+		gm.argParser->displayArgs();
+		gm.settings->displaySettings();
 
 		// Try to load the fitness cases
-		if (!gm.fitnessCases.loadFile(gm.settings.FITNESS_CASE_FILE)) {
-			std::cout << "Unable to load fitness cases: " << gm.settings.FITNESS_CASE_FILE << std::endl;
+		if (!gm.fitnessCases->loadFile(gm.settings->FITNESS_CASE_FILE)) {
+			std::cout << "Unable to load fitness cases: " << gm.settings->FITNESS_CASE_FILE << std::endl;
 			exit(2);
 		}
-		gm.fitnessCases.displayFitnessCases();
+		gm.fitnessCases->displayFitnessCases();
 
-		gm.nodeManager.setupSelf();
-		gm.evolutionManager.runGenerations();
+		gm.nodeManager->setupSelf();
+		gm.evolutionManager->runGenerations();
 	}
 
 	return 0;

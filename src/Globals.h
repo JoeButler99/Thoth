@@ -28,11 +28,13 @@
 #include <fstream>
 #include <string>
 #include "RNG.h"
+#include "GlobalManager.h"
 
 
 //// Global Objects
+class GlobalManager;
 extern RNG rng;
-
+extern GlobalManager gm;
 
 // Global Constants
 const unsigned RPN_STACK_LIMIT = 250;

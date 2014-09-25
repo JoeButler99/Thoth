@@ -42,15 +42,15 @@ PopulationManager::~PopulationManager() { }
 
 // Generate population members up to the required number
 void PopulationManager::generateRequired() {
-	int missing = gm.settings.POPULATION - populationlist.v.size();
+	int missing = gm.settings->POPULATION - populationlist.v.size();
 #pragma omp parallel
 	{
 #pragma omp for schedule(dynamic) nowait
 		for (int x = 0; x < missing; x++) {
 			if (x < (missing / 2)) {
-				populationlist.add(PopulationMember("fill",gm.settings.INITIAL_MAX_DEPTH));
+				populationlist.add(PopulationMember("fill",gm.settings->INITIAL_MAX_DEPTH));
 			} else {
-				populationlist.add(PopulationMember("grow",gm.settings.INITIAL_MAX_DEPTH));
+				populationlist.add(PopulationMember("grow",gm.settings->INITIAL_MAX_DEPTH));
 			}
 		}
 		if (missing > 0 ) {
@@ -63,7 +63,7 @@ void PopulationManager::generateRequired() {
 // Ask the population member at position (memberid) to solve a single caseset
 // Used to get the program to give its solution to a single input
 double PopulationManager::solveVecCaseSet(int memberid) {
-	return populationlist.v.at(memberid).rpnVecSolveSelf(&gm.fitnessCases.cliCase[0]);
+	return populationlist.v.at(memberid).rpnVecSolveSelf(&gm.fitnessCases->cliCase[0]);
 
 }
 
@@ -71,15 +71,15 @@ double PopulationManager::solveVecCaseSet(int memberid) {
 // Score the member of the population at position x
 void PopulationManager::scoreOneMember(int memberid) {
 	double total_away = 0.0;
-	bool scaling = gm.fitnessCases.SCALING_ENABLED;
+	bool scaling = gm.fitnessCases->SCALING_ENABLED;
 	if ( populationlist.v.at(memberid).hasChanged ) {
 		// Loop all fitness cases
-		for (unsigned int y = 0; y < gm.fitnessCases.TOTAL_CASES; y++) {
-			double result = populationlist.v[memberid].rpnVecSolveSelf( &gm.fitnessCases.cases[y][0]);
-			double score = result - gm.fitnessCases.targets[y];
+		for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
+			double result = populationlist.v[memberid].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]);
+			double score = result - gm.fitnessCases->targets[y];
 			if (score < 0.0) { score *= -1.0;}
 			if (scaling) {
-				score *= gm.fitnessCases.multipliers[y];
+				score *= gm.fitnessCases->multipliers[y];
 			}
 			total_away += score;
 		}
@@ -91,28 +91,28 @@ void PopulationManager::scoreOneMember(int memberid) {
 
 // Score the entire population
 void PopulationManager::scoreAllVecRpn() {
-	if (gm.settings.USE_CUT_SCORING) {
+	if (gm.settings->USE_CUT_SCORING) {
 		missedCut = 0;
 	}
-	bool scaling = gm.fitnessCases.SCALING_ENABLED;
+	bool scaling = gm.fitnessCases->SCALING_ENABLED;
 #pragma omp parallel
 	{
 #pragma omp for schedule(dynamic) nowait
-		for ( unsigned int x = 0; x < gm.settings.POPULATION; x ++) {
+		for ( unsigned int x = 0; x < gm.settings->POPULATION; x ++) {
 			if ( populationlist.v.at(x).hasChanged ) {
 				double total_away = 0.0;
 				// Loop all fitness cases
-				for (unsigned int y = 0; y < gm.fitnessCases.TOTAL_CASES; y++) {
+				for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
 
-					double result = populationlist.v[x].rpnVecSolveSelf( &gm.fitnessCases.cases[y][0]);
-					double score = result - gm.fitnessCases.targets[y];
+					double result = populationlist.v[x].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]);
+					double score = result - gm.fitnessCases->targets[y];
 					if (score < 0.0) { score *= -1.0;}
 					if (scaling) {
-						score *= gm.fitnessCases.multipliers[y];
+						score *= gm.fitnessCases->multipliers[y];
 					}
 					total_away += score;
 
-					if (gm.settings.USE_CUT_SCORING && cutScore > 0) { // Every 25 loops check if we can bin
+					if (gm.settings->USE_CUT_SCORING && cutScore > 0) { // Every 25 loops check if we can bin
 						if (total_away > cutScore) {
 							missedCut += 1;
 							break;
@@ -135,11 +135,11 @@ void PopulationManager::sortByScore() {
 
 // Remove the worst score members from the populatuion
 void PopulationManager::cullWeak(){
-	int num_to_murder = gm.settings.POPULATION * ((100 - gm.settings.KEEP_TOP_PERCENT) / 100.0);
-	populationlist.v.resize(gm.settings.POPULATION - num_to_murder);
+	int num_to_murder = gm.settings->POPULATION * ((100 - gm.settings->KEEP_TOP_PERCENT) / 100.0);
+	populationlist.v.resize(gm.settings->POPULATION - num_to_murder);
 
 	// The last members score is the 'cut' mark
-	if (gm.settings.USE_CUT_SCORING) {
+	if (gm.settings->USE_CUT_SCORING) {
 		cutScore = populationlist.v.back().score;
 	}
 }
@@ -147,11 +147,11 @@ void PopulationManager::cullWeak(){
 
 // Add the programs constants into the save file
 void PopulationManager::addConstantsToFile(std::ofstream * writefile) {
-	if (gm.fitnessCases.NUM_CONSTS != 0 ) {
+	if (gm.fitnessCases->NUM_CONSTS != 0 ) {
 		writefile->precision(20);
 		*writefile << "CONSTANTS ";
-		for (unsigned x = 0; x < gm.fitnessCases.NUM_CONSTS; ++x) {
-			*writefile << "+" << gm.fitnessCases.cp.constantSet.at(x);
+		for (unsigned x = 0; x < gm.fitnessCases->NUM_CONSTS; ++x) {
+			*writefile << "+" << gm.fitnessCases->cp.constantSet.at(x);
 		}
 		*writefile << "|" << std::endl;
 	}
@@ -168,7 +168,7 @@ void PopulationManager::addNodesToFile(int population_member_id, std::ofstream *
 	// Write this node to file and go through it children
 	if(n.isTerminal) {
 		*writefile<<"T:"<<n.tNo<<"|"<<std::endl;
-		if(n.tNo > gm.fitnessCases.TERMINALS) {
+		if(n.tNo > gm.fitnessCases->TERMINALS) {
 			std::cout << "FOUND BAD TERMINAL NUMBER: " << n.tNo << std::endl;
 			std::cout << "CREATED BY: " << populationlist.v.at(population_member_id).method << std::endl;
 			exit(10);
@@ -177,7 +177,7 @@ void PopulationManager::addNodesToFile(int population_member_id, std::ofstream *
 		if (n.fNo == -1) {
 			*writefile<<"F:"<<n.fNo<<"| ROOT WITH("<< n.fInputs << ") inputs" <<std::endl;
 		} else {
-			*writefile<<"F:"<<n.fNo<<"| "<< gm.nodeManager.functionlist.at(n.fNo).name  <<std::endl;
+			*writefile<<"F:"<<n.fNo<<"| "<< gm.nodeManager->functionlist.at(n.fNo).name  <<std::endl;
 		}
 		for(unsigned int x = 0; x < n.fInputs;x++) {
 			addNodesToFile(population_member_id,writefile,depth +1);
@@ -188,15 +188,15 @@ void PopulationManager::addNodesToFile(int population_member_id, std::ofstream *
 
 // Takes a population member and writes its node tree to disk.
 void PopulationManager::writeMembersToDisk() {
-	for (unsigned int x = 0; x < gm.settings.SAVE_TOTAL; x++) {
+	for (unsigned int x = 0; x < gm.settings->SAVE_TOTAL; x++) {
 		char filename[100];
 		std::ofstream writefile;
-		sprintf(filename,"%s.%d",gm.settings.SAVE_FILE_PREFIX.c_str(),x);
+		sprintf(filename,"%s.%d",gm.settings->SAVE_FILE_PREFIX.c_str(),x);
 		writefile.open(filename);
-		writefile << "#\n# Generated Node Tree from " << gm.settings.FITNESS_CASE_FILE << "\n";
+		writefile << "#\n# Generated Node Tree from " << gm.settings->FITNESS_CASE_FILE << "\n";
 		writefile << "# This Tree scored: " << populationlist.v.at(x).score << "\n";
 		writefile << "# Total Nodes: " << populationlist.v.at(x).rpnNodeVec.size() << "\n";
-		writefile << "FUNCTION_SET: " << gm.settings.FUNCTION_SET << "\n";
+		writefile << "FUNCTION_SET: " << gm.settings->FUNCTION_SET << "\n";
 		pos = -1;
 		addConstantsToFile(&writefile);
 		addNodesToFile(x,&writefile,0);
@@ -205,10 +205,10 @@ void PopulationManager::writeMembersToDisk() {
 }
 
 void PopulationManager::removeMembersFromDisk() {
-	for (unsigned int x = 0; x < gm.settings.SAVE_TOTAL; x++) {
+	for (unsigned int x = 0; x < gm.settings->SAVE_TOTAL; x++) {
 			char filename[100];
 			std::ofstream writefile;
-			sprintf(filename,"%s.%d",gm.settings.SAVE_FILE_PREFIX.c_str(),x);
+			sprintf(filename,"%s.%d",gm.settings->SAVE_FILE_PREFIX.c_str(),x);
 			remove(filename);
 		}
 }
@@ -217,16 +217,16 @@ void PopulationManager::removeMembersFromDisk() {
 // Save the current programs estimates to file
 void PopulationManager::writeGuesses() {
     std::ofstream guesses_out;
-    guesses_out.open(gm.settings.GUESSES_FILE.c_str());
-	guesses_out<<"#\n# Generated Node tree from " << gm.settings.FITNESS_CASE_FILE << ".\n";
+    guesses_out.open(gm.settings->GUESSES_FILE.c_str());
+	guesses_out<<"#\n# Generated Node tree from " << gm.settings->FITNESS_CASE_FILE << ".\n";
 	guesses_out<<"# This tree scored: "<< populationlist.v.at(0).score << std::endl;
 	guesses_out<<"# Total Nodes: "<< populationlist.v.at(0).rpnNodeVec.size()<< std::endl;
 	char line[100];
-	for (unsigned int x = 0; x < gm.fitnessCases.TOTAL_CASES; x++) {
-		double result = populationlist.v[0].rpnVecSolveSelf( &gm.fitnessCases.cases[x][0]);
+	for (unsigned int x = 0; x < gm.fitnessCases->TOTAL_CASES; x++) {
+		double result = populationlist.v[0].rpnVecSolveSelf( &gm.fitnessCases->cases[x][0]);
 		sprintf(line,"Case: %-4d ",x);
 		guesses_out << line;
-		sprintf(line,"\tTarget: %-6f \tResult: %-6f",gm.fitnessCases.targets[x],result);
+		sprintf(line,"\tTarget: %-6f \tResult: %-6f",gm.fitnessCases->targets[x],result);
 		guesses_out << line;
 		guesses_out << std::endl;
 	}
@@ -260,16 +260,16 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 							}
 
 							ConstantPool cp(savedConstants);
-							gm.fitnessCases.updateConstantSet(cp);
+							gm.fitnessCases->updateConstantSet(cp);
 						} else if (nodedef.at(0) == 'F' && nodedef.at(1) == 'U') {
 							// We just need to check this function set is the same as the one the config loaded
 							// This must quietly change to the correct function set, so if we are solving
 							// we do not pollute the output with a message
 							std::string functionSet = nodedef.replace(0,14,"");
 							functionSet.erase(std::remove(functionSet.begin(), functionSet.end(), '\n'), functionSet.end());
-							if (functionSet != gm.settings.FUNCTION_SET) {
-								gm.settings.FUNCTION_SET.assign(functionSet);
-								gm.nodeManager.initFunctions();
+							if (functionSet != gm.settings->FUNCTION_SET) {
+								gm.settings->FUNCTION_SET.assign(functionSet);
+								gm.nodeManager->initFunctions();
 							}
 
 						} else {
@@ -281,7 +281,7 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 								if (number == -1) {
 									rpn_node_vec.push_back(Node(1,true));
 								} else {
-									rpn_node_vec.push_back(Node(gm.nodeManager.getFunctionByNum(number)));
+									rpn_node_vec.push_back(Node(gm.nodeManager->getFunctionByNum(number)));
 								}
 							} else {
 								rpn_node_vec.push_back(Node(number));
@@ -303,9 +303,9 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 }
 
 void PopulationManager::loadMembersFromDisk() {
-	for (unsigned int x = 0; x < gm.settings.LOAD_TOTAL; x++) {
+	for (unsigned int x = 0; x < gm.settings->LOAD_TOTAL; x++) {
 		char filename[100];
-		sprintf(filename,"%s.%d",gm.settings.SAVE_FILE_PREFIX.c_str(),x);
+		sprintf(filename,"%s.%d",gm.settings->SAVE_FILE_PREFIX.c_str(),x);
 		std::ifstream loadfile(filename);
 		std::vector<Node> rpn_node_vec;
 		if (loadfile) {
@@ -313,8 +313,5 @@ void PopulationManager::loadMembersFromDisk() {
 		}
 	}
 }
-
-
-
 
 
