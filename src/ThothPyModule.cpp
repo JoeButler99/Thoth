@@ -8,12 +8,9 @@
 #include <sys/time.h>   // Timer funcions
 #include <ctime>
 #include <cstring>
-//#include <boost/python/module.hpp>
-//#include <boost/python/def.hpp>
 
 
-
-// Prepare the Python Module
+// Prepare the Thoth Imports Module
 #include "Settings.h"
 #include "JsonConfigLoader.h"
 #include "ArgParser.h"
