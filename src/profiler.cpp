@@ -63,8 +63,6 @@ NodeManager nm;
 PopulationManager pm;
 Optimiser o;
 EvolutionManager em;
-GlobalManager gm = GlobalManager(ap,jcl,settings,fc,nm,pm,o,em);
-
 
 
 void usage() {
@@ -74,44 +72,45 @@ void usage() {
 
 
 void setup(int argc, char **argv){
-	gm.argParser.configFile = "conf/profiler-original-config.json";
+        gm.initialise(&ap,&jcl,&settings,&fc,&nm,&pm,&o,&em);
+	gm.argParser->configFile = "conf/profiler-original-config.json";
 	gm.loadSettings(argc,argv,true);
 
 
-	gm.fitnessCases.loadFile(gm.settings.FITNESS_CASE_FILE);
-	gm.nodeManager.setupSelf();
-	std::cout << "Working with " << gm.nodeManager.functionlist.size() << " functions." << std::endl;
+	gm.fitnessCases->loadFile(gm.settings->FITNESS_CASE_FILE);
+	gm.nodeManager->setupSelf();
+	std::cout << "Working with " << gm.nodeManager->functionlist.size() << " functions." << std::endl;
 	standardPopMem.method = "fill";
 	standardPopMem.rpnNodeVec.push_back(Node(1,true));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(0)));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(16)));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(1)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager->getFunctionByNum(0)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager->getFunctionByNum(16)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager->getFunctionByNum(1)));
 	standardPopMem.rpnNodeVec.push_back(Node(4));
 	standardPopMem.rpnNodeVec.push_back(Node(7));
 	standardPopMem.rpnNodeVec.push_back(Node(10));
 	standardPopMem.rpnNodeVec.push_back(Node(13));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(3)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager->getFunctionByNum(3)));
 	standardPopMem.rpnNodeVec.push_back(Node(16));
 	standardPopMem.rpnNodeVec.push_back(Node(19));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(0)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager->getFunctionByNum(0)));
 	standardPopMem.rpnNodeVec.push_back(Node(22));
-	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager.getFunctionByNum(17)));
+	standardPopMem.rpnNodeVec.push_back(Node(gm.nodeManager->getFunctionByNum(17)));
 	standardPopMem.rpnNodeVec.push_back(Node(25));
 	standardPopMem.rpnNodeVec.push_back(Node(28));
 	standardPopMem.rpnNodeVec.push_back(Node(31));
 	standardPopMem.rpnNodeVec.push_back(Node(34));
 	standardPopMem.hasChanged = true;
-	gm.populationManager.populationlist.add(standardPopMem);
-	gm.populationManager.scoreOneMember(0);
-	standardPopMem.score = gm.populationManager.populationlist.v.at(0).score;
-	std::cout << "Standard Pop Mem scores: "<< gm.populationManager.populationlist.v.at(0).score << std::endl;
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.add(standardPopMem);
+	gm.populationManager->scoreOneMember(0);
+	standardPopMem.score = gm.populationManager->populationlist.v.at(0).score;
+	std::cout << "Standard Pop Mem scores: "<< gm.populationManager->populationlist.v.at(0).score << std::endl;
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testNodeCreation(unsigned reps) {
 	for (unsigned x = 0; x < reps; ++x) {
-		Node nT(rng.iRand(gm.fitnessCases.TERMINALS));
-		Node nF(gm.nodeManager.giveRandFunction());
+		Node nT(rng.iRand(gm.fitnessCases->TERMINALS));
+		Node nF(gm.nodeManager->giveRandFunction());
 	}
 }
 
@@ -125,7 +124,7 @@ void testPopulationMemberCreation(unsigned reps) {
 void testIRand(unsigned reps) {
 	int result = 0;
 	for (unsigned x = 0; x < reps; ++x) {
-		result = rng.iRand(gm.settings.POPULATION);
+		result = rng.iRand(gm.settings->POPULATION);
 	}
 	dummyInt = result;
 }
@@ -136,7 +135,7 @@ void testIRandThreaded(unsigned reps) {
 	{
 #pragma omp for schedule(static) nowait
 		for (unsigned x = 0; x < reps; ++x) {
-			result = rng.iRand(gm.settings.POPULATION);
+			result = rng.iRand(gm.settings->POPULATION);
 		}
 	}
 	dummyInt = result;
@@ -145,65 +144,65 @@ void testIRandThreaded(unsigned reps) {
 
 void testNodeReassign(unsigned reps) {
 	for (unsigned x = 0; x < reps; ++x) {
-		Node nT(rng.iRand(gm.fitnessCases.TERMINALS));
-		Node nF(gm.nodeManager.giveRandFunction());
-		nF.setTerminal(rng.iRand(gm.fitnessCases.TERMINALS));
-		nT.setFromFunc(gm.nodeManager.giveRandFunction());
+		Node nT(rng.iRand(gm.fitnessCases->TERMINALS));
+		Node nF(gm.nodeManager->giveRandFunction());
+		nF.setTerminal(rng.iRand(gm.fitnessCases->TERMINALS));
+		nT.setFromFunc(gm.nodeManager->giveRandFunction());
 	}
 }
 
 
 void testPopulationManagerPopulationCreation(unsigned reps) {
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.populationManager.generateRequired();
-		gm.populationManager.populationlist.v.clear();
+		gm.populationManager->generateRequired();
+		gm.populationManager->populationlist.v.clear();
 	}
 }
 
 
 void testPopulationManagerPopulationSort(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	TvectorPM test = gm.populationManager.populationlist;
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	TvectorPM test = gm.populationManager->populationlist;
 
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.populationManager.sortByScore();
-		gm.populationManager.populationlist = test;
+		gm.populationManager->sortByScore();
+		gm.populationManager->populationlist = test;
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testPopulationManagerPopulationCull(unsigned reps) {
-	gm.populationManager.generateRequired();
-	TvectorPM test = gm.populationManager.populationlist;
+	gm.populationManager->generateRequired();
+	TvectorPM test = gm.populationManager->populationlist;
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.populationManager.sortByScore();
-		gm.populationManager.cullWeak();
-		gm.populationManager.populationlist = test;
+		gm.populationManager->sortByScore();
+		gm.populationManager->cullWeak();
+		gm.populationManager->populationlist = test;
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testPopulationManagerScoreOne(unsigned reps) {
-	gm.populationManager.generateRequired();
+	gm.populationManager->generateRequired();
 	int member;
 	for (unsigned x = 0; x < reps; ++x) {
-		member = rng.iRand(gm.settings.POPULATION);
-		gm.populationManager.scoreOneMember(member);
-		gm.populationManager.populationlist.v.at(member).hasChanged = true; // Score again if we get it
+		member = rng.iRand(gm.settings->POPULATION);
+		gm.populationManager->scoreOneMember(member);
+		gm.populationManager->populationlist.v.at(member).hasChanged = true; // Score again if we get it
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 
 void testPopulationManagerScoreAll(unsigned reps) {
-	gm.populationManager.generateRequired();
-	TvectorPM test = gm.populationManager.populationlist;
+	gm.populationManager->generateRequired();
+	TvectorPM test = gm.populationManager->populationlist;
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.populationManager.scoreAllVecRpn();
-		gm.populationManager.populationlist = test;
+		gm.populationManager->scoreAllVecRpn();
+		gm.populationManager->populationlist = test;
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 
@@ -211,7 +210,7 @@ void testOptimiserTerminalSwapper(unsigned reps) {
 
 	for (unsigned x = 0; x < reps; ++x) {
 		PopulationMember oP = standardPopMem;
-		gm.optimiser.terminalSwapper(oP);
+		gm.optimiser->terminalSwapper(oP);
 	}
 }
 
@@ -219,7 +218,7 @@ void testOptimiserFunctionSwapper(unsigned reps) {
 
 	for (unsigned x = 0; x < reps; ++x) {
 		PopulationMember oP = standardPopMem;
-		gm.optimiser.functionSwapper(oP);
+		gm.optimiser->functionSwapper(oP);
 	}
 }
 
@@ -227,15 +226,15 @@ void testOptimiserBranchCutter(unsigned reps) {
 
 	for (unsigned x = 0; x < reps; ++x) {
 		PopulationMember oP = standardPopMem;
-		gm.optimiser.branchCutter(oP);
+		gm.optimiser->branchCutter(oP);
 	}
 }
 
 void testOptimiserOptimise(unsigned reps) {
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.populationManager.populationlist.add(standardPopMem);
-		gm.optimiser.optimise(gm.settings.OPTIMISE_CUTTER_EVERY* gm.settings.OPTIMISE_FUNCTIONS_EVERY * gm.settings.OPTIMISE_TERMINALS_EVERY,false);
-		gm.populationManager.populationlist.v.clear();
+		gm.populationManager->populationlist.add(standardPopMem);
+		gm.optimiser->optimise(gm.settings->OPTIMISE_CUTTER_EVERY* gm.settings->OPTIMISE_FUNCTIONS_EVERY * gm.settings->OPTIMISE_TERMINALS_EVERY,false);
+		gm.populationManager->populationlist.v.clear();
 	}
 }
 
@@ -243,70 +242,70 @@ void testEvolutionCopyNodeTree(unsigned reps) {
 	std::vector<Node> testRPNTree;
 	for (unsigned x = 0; x < reps; ++x) {
 		testRPNTree.clear();
-		gm.evolutionManager.copyNodeTree(0,0,testRPNTree,standardPopMem.rpnNodeVec);
+		gm.evolutionManager->copyNodeTree(0,0,testRPNTree,standardPopMem.rpnNodeVec);
 	}
 }
 
 void testEvolutionTournament(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	gm.populationManager.sortByScore();
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	gm.populationManager->sortByScore();
 	int result = 0;
 	for (unsigned x = 0; x < reps; ++x) {
-		result = gm.evolutionManager.tournament(gm.settings.POPULATION);
+		result = gm.evolutionManager->tournament(gm.settings->POPULATION);
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 	dummyInt = result;
 }
 
 void testEvolutionCrossover(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	gm.populationManager.sortByScore();
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	gm.populationManager->sortByScore();
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.evolutionManager.crossover(8,100);
+		gm.evolutionManager->crossover(8,100);
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testEvolutionCrossoverBranch(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	gm.populationManager.sortByScore();
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	gm.populationManager->sortByScore();
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.evolutionManager.crossoverNewRoot(8,100);
+		gm.evolutionManager->crossoverNewRoot(8,100);
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testEvolutionCutNodeTree(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	gm.populationManager.sortByScore();
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	gm.populationManager->sortByScore();
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.evolutionManager.crossover(8,100);
+		gm.evolutionManager->crossover(8,100);
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testEvolutionMutTree(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	gm.populationManager.sortByScore();
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	gm.populationManager->sortByScore();
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.evolutionManager.mutateNodeTree(8,100);
+		gm.evolutionManager->mutateNodeTree(8,100);
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 void testEvolutionMutNode(unsigned reps) {
-	gm.populationManager.generateRequired();
-	gm.populationManager.scoreAllVecRpn();
-	gm.populationManager.sortByScore();
+	gm.populationManager->generateRequired();
+	gm.populationManager->scoreAllVecRpn();
+	gm.populationManager->sortByScore();
 	for (unsigned x = 0; x < reps; ++x) {
-		gm.evolutionManager.mutateSingleNode(8,100);
+		gm.evolutionManager->mutateSingleNode(8,100);
 	}
-	gm.populationManager.populationlist.v.clear();
+	gm.populationManager->populationlist.v.clear();
 }
 
 
@@ -345,8 +344,8 @@ int main(int argc, char **argv) {
 
 	setup(argc,argv);
 	std::cout << "Thoth Profiler" << std::endl;
-	gm.settings.displaySettings();
-	gm.fitnessCases.displayFitnessCases();
+	gm.settings->displaySettings();
+	gm.fitnessCases->displayFitnessCases();
 
 	reps = atoi(argv[1]);
 
