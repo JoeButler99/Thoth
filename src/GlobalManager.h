@@ -25,7 +25,6 @@
 #ifndef GLOBALMANAGER_H_
 #define GLOBALMANAGER_H_
 
-
 #include "GuiFunctions.h"
 #include "ArgParser.h"
 #include "JsonConfigLoader.h"

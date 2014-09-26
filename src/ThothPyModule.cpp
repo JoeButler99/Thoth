@@ -1,11 +1,11 @@
 #include <boost/python.hpp>
 #include <iostream>
-#include <vector>		// Variable length arrays
+#include <vector>
 #include <string>
 #include <sstream>
 #include <map>
-#include <omp.h>		// Paralisation functions
-#include <sys/time.h>   // Timer funcions
+#include <omp.h>
+#include <sys/time.h>
 #include <ctime>
 #include <cstring>
 
@@ -13,12 +13,10 @@
 // Prepare the Thoth Imports Module
 #include "Settings.h"
 #include "JsonConfigLoader.h"
-#include "ArgParser.h"
-#include "FitnessCases.h"
-//#include "NodeManager.h"
-//#include "Optimiser.h"
-//#include "EvolutionManager.h"
-//#
+#include "PopulationManager.h"
+#include "Optimiser.h"
+#include "EvolutionManager.h"
+#include "GlobalManager.h"
 
 
 double solver(const int num_vars,const std::string &nodetree, boost::python::list &case_vars) {
@@ -27,11 +25,11 @@ double solver(const int num_vars,const std::string &nodetree, boost::python::lis
     JsonConfigLoader jcl;
 	Settings settings;
 	FitnessCases fc;
-//	NodeManager nm;
-//	PopulationManager pm;
-//	Optimiser o;
-//	EvolutionManager em;
-//	GlobalManager gm = GlobalManager(ap,jcl,settings,fc,nm,pm,o,em);
+	NodeManager nm;
+	PopulationManager pm;
+	Optimiser o;
+	EvolutionManager em;
+	gm.initialise(&ap,&jcl,&settings,&fc,&nm,&pm,&o,&em);
 
 	// Prepare the variables
 	std::vector<double> vCaseVars;
@@ -44,13 +42,11 @@ double solver(const int num_vars,const std::string &nodetree, boost::python::lis
 	std::copy(vCaseVars.begin(),vCaseVars.end()-1,std::ostream_iterator<int>(oss, " "));
 	oss << vCaseVars.back();
 
-	std::cout << display_bool(true) << std::endl;
-	// Debug Output
-	std::cout << num_vars << std::endl;
-	std::cout << nodetree << std::endl;
-	std::cout << oss.str() << std::endl;
-
-	return 42.0;
+	// Prepare the solver to run
+	gm.fitnessCases->loadString(oss.str().c_str(),num_vars);
+	gm.populationManager->loadMemberFromFilename(nodetree.c_str());
+	gm.fitnessCases->addConstantsToCliCase(); // Does nothing if no constants
+	return gm.populationManager->solveVecCaseSet(0);
 }
 
 using namespace boost::python;
