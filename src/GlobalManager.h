@@ -27,12 +27,9 @@
 
 
 #include "GuiFunctions.h"
-//#include "Globals.h"
 #include "ArgParser.h"
 #include "JsonConfigLoader.h"
 #include "Settings.h"
-//#include "NodeManager.h"
-//#include "PopulationMember.h"
 
 
 // Forward Declarations

@@ -24,19 +24,9 @@
 
 #include "GlobalManager.h"
 
-//GlobalManager::GlobalManager(ArgParser & argParser,JsonConfigLoader & jsonConfig,Settings & settings,
-//		  FitnessCases & fitnessCases,NodeManager & nodeManager,PopulationManager & populationManager,
-//		  Optimiser & optimiser,EvolutionManager & evolutionManager ) :
-//argParser(argParser),
-//jsonConfig(jsonConfig),
-//settings(settings),
-//fitnessCases(fitnessCases),
-//nodeManager(nodeManager),
-//populationManager(populationManager),
-//optimiser(optimiser),
-//evolutionManager(evolutionManager)
-//{}
+// Create my global object
 GlobalManager gm;
+
 GlobalManager::GlobalManager() {}
 GlobalManager::~GlobalManager() {}
 
