@@ -24,16 +24,17 @@
 
 #ifndef EVOLUTIONMANAGER_H_
 #define EVOLUTIONMANAGER_H_
+#include <sys/time.h>
+#include "Globals.h"
 #include "PopulationManager.h"
 #include "Optimiser.h"
-#include "GlobalManager.h"
+
 
 
 class EvolutionManager {
 public:
 	EvolutionManager();
 	~EvolutionManager();
-	//bool silence = false; // C++ 11
 	bool silence;
 	int tournament(int tornament_size);
 
@@ -42,7 +43,7 @@ public:
 	void cutNodeTree(int num_needed, int pool_size);
 	void crossover(int num_needed, int pool_size);
 	void crossoverNewRoot(int num_needed, int pool_size);
-	void runGenerations(unsigned gens = gm.settings.GENERATIONS);
+	void runGenerations(unsigned gens = gm.settings->GENERATIONS);
 
 	void deleteTreeBranch(int node_index,std::vector<Node> & node_tree );
 	void makeNodeTree(int depth,bool fill,std::vector<Node> & node_tree);

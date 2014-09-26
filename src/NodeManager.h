@@ -31,7 +31,6 @@
 #include "Function.h"
 #include "RNG.h"
 #include "FunctionSet.h"
-#include "GlobalManager.h"
 
 
 

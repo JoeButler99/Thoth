@@ -39,7 +39,7 @@ public:
 	JsonConfigLoader();
 	~JsonConfigLoader();
 	bool loadFile(std::string inputfile);
-	bool updateSettings(Settings & settings);
+	bool updateSettings(Settings *settings);
 
 };
 

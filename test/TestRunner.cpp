@@ -42,6 +42,7 @@
 #include "TestEvolutionManager.h"
 #include "../src/RNG.h"
 #include "../src/Globals.h"
+#include "../src/GlobalManager.h"
 #include "TestConstantPool.h"
 
 
@@ -53,19 +54,19 @@ NodeManager nm;
 PopulationManager pm;
 Optimiser o;
 EvolutionManager em;
-GlobalManager gm = GlobalManager(ap,jcl,settings,fc,nm,pm,o,em);
+
 
 
 int main(int argc, char **argv) {
-
     std::cout << "Configuring Global Manager:" << std::endl;
-    gm.argParser.configFile = "conf/unit-test-config.json";
-    gm.argParser.action     = "improve";
-    gm.jsonConfig.loadFile(gm.argParser.configFile);
-    gm.jsonConfig.updateSettings(gm.settings);
-    gm.nodeManager.setupSelf();
-    gm.optimiser.silence = true;
-    gm.evolutionManager.silence = true;
+    gm.initialise(&ap,&jcl,&settings,&fc,&nm,&pm,&o,&em);
+    gm.argParser->configFile = "conf/unit-test-config.json";
+    gm.argParser->action     = "improve";
+    gm.jsonConfig->loadFile(gm.argParser->configFile);
+    gm.jsonConfig->updateSettings(gm.settings);
+    gm.nodeManager->setupSelf();
+    gm.optimiser->silence = true;
+    gm.evolutionManager->silence = true;
 
 
 
@@ -90,7 +91,7 @@ int main(int argc, char **argv) {
     std::cout<< "Running the unit tests."<< std::endl;
     runner.run("",false,true,false);
 
-    remove(gm.settings.GUESSES_FILE.c_str());
+    remove(gm.settings->GUESSES_FILE.c_str());
 
 
     return runner.result().wasSuccessful() ? 0 : 1;

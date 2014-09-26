@@ -27,7 +27,7 @@
 
 
 #include "GuiFunctions.h"
-#include "Globals.h"
+//#include "Globals.h"
 #include "ArgParser.h"
 #include "JsonConfigLoader.h"
 #include "Settings.h"
@@ -48,21 +48,20 @@ class PopulationMember;
 // Global manager exists to hold together what were previously held in single global objects
 class GlobalManager {
 public:
-	ArgParser 		  & argParser;
-	JsonConfigLoader  & jsonConfig;
-	Settings		  & settings;
-	FitnessCases	  & fitnessCases;
-	NodeManager       & nodeManager;
-	PopulationManager & populationManager;
-	Optimiser		  & optimiser;
-	EvolutionManager  & evolutionManager;
-	GlobalManager(ArgParser & argParser,JsonConfigLoader & jsonConfig,Settings & settings,
-				  FitnessCases & fitnessCases,NodeManager & nodeManager,PopulationManager & populationManager,
-				  Optimiser & optimiser,EvolutionManager & evolutionManager );
+	ArgParser 		  * argParser;
+	JsonConfigLoader  * jsonConfig;
+	Settings		  * settings;
+	FitnessCases	  * fitnessCases;
+	NodeManager       * nodeManager;
+	PopulationManager * populationManager;
+	Optimiser		  * optimiser;
+	EvolutionManager  * evolutionManager;
+	GlobalManager();
 	~GlobalManager();
-	 void loadSettings(int argc, char* argv[],bool profiling = false);
+	void initialise(ArgParser * argParser,JsonConfigLoader * jsonConfig,Settings * settings,
+					  FitnessCases * fitnessCases,NodeManager * nodeManager,PopulationManager * populationManager,
+					  Optimiser * optimiser,EvolutionManager * evolutionManager );
+	void loadSettings(int argc, char* argv[],bool profiling = false);
 };
-
-extern GlobalManager gm;
 
 #endif /* GLOBALMANAGER_H_ */

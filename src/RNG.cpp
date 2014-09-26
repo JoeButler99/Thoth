@@ -77,22 +77,6 @@ RNG::RNG(double dmin, double dmax) : dMin(dmin), dMax(dmax), iMin(0), iMax(10000
 RNG::~RNG() { }
 
 
-// Moved inline to .h  08-03-2014
-//bool RNG::bRand() {
-//	return (int_generator.at(omp_get_thread_num())() % 2);
-//}
-//
-//double RNG::dRand() {
-//	return double_generator.at(omp_get_thread_num())();
-//}
-//
-//double RNG::dRand(double min, double max) {
-//	return (double_generator.at(omp_get_thread_num())() * (fabs(min - max) / fabs(dMin - dMax))) + min;
-//}
-
-
-
-
 
 
 

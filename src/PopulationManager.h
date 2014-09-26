@@ -27,10 +27,10 @@
 
 #include <omp.h>		// Paralisation functions
 #include <algorithm> 	// Sort method
-
+#include "Globals.h"
 #include "PopulationMember.h"
 #include "TvectorPM.h"
-#include "GlobalManager.h"
+
 
 
 class TvectorPM;
