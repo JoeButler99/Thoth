@@ -71,9 +71,9 @@ protected:
 
 	void testBranchCutter() {
 		std::cerr << "Optimiser:\t\t" <<  __func__ << std::endl;
-		gm.fitnessCases.clear();
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/testSinx"));
-		gm.populationManager.populationlist.v.clear();
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/testSinx"));
+		gm.populationManager->populationlist.v.clear();
 
 		PopulationMember p;
 		int startSize, finalSize;
@@ -82,26 +82,26 @@ protected:
 		int loops = 1;
 		while(!improvement) {
 			p.createSelf("TestCase",3);
-			gm.populationManager.populationlist.add(p);
-			gm.populationManager.scoreOneMember(0);
-			startScore = gm.populationManager.populationlist.v.at(0).score;
-			startSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 0);
+			gm.populationManager->populationlist.add(p);
+			gm.populationManager->scoreOneMember(0);
+			startScore = gm.populationManager->populationlist.v.at(0).score;
+			startSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 0);
 
-			gm.optimiser.branchCutter(gm.populationManager.populationlist.v.at(0));
+			gm.optimiser->branchCutter(gm.populationManager->populationlist.v.at(0));
 
-			finalScore = gm.populationManager.populationlist.v.at(0).score;
-			finalSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
+			finalScore = gm.populationManager->populationlist.v.at(0).score;
+			finalSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
 
 			CPPUNIT_ASSERT(finalScore <= startScore);
 			CPPUNIT_ASSERT(finalSize <= startSize);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).score != 0);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 1);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).score != 0);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 1);
 			if(finalScore < startScore) {
 				improvement = true;
 			} else {
 				loops++;
-				gm.populationManager.populationlist.v.clear();
+				gm.populationManager->populationlist.v.clear();
 				std::cerr << "\t\t\t * Improve Attempt: " <<  loops << std::endl;
 			}
 		}
@@ -110,9 +110,9 @@ protected:
 
 	void testTerminalSwapper() {
 		std::cerr << "Optimiser:\t\t" <<  __func__ << std::endl;
-		gm.fitnessCases.clear();
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/medium_test_case"));
-		gm.populationManager.populationlist.v.clear();
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/medium_test_case"));
+		gm.populationManager->populationlist.v.clear();
 		PopulationMember p;
 		int startSize, finalSize;
 		double startScore, finalScore;
@@ -120,25 +120,25 @@ protected:
 		int loops = 1;
 		while(!improvement) {
 			p.createSelf("TestCase",3);
-			gm.populationManager.populationlist.add(p);
-			gm.populationManager.scoreOneMember(0);
-			startScore = gm.populationManager.populationlist.v.at(0).score;
-			startSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 0);
+			gm.populationManager->populationlist.add(p);
+			gm.populationManager->scoreOneMember(0);
+			startScore = gm.populationManager->populationlist.v.at(0).score;
+			startSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 0);
 
-			gm.optimiser.terminalSwapper(gm.populationManager.populationlist.v.at(0));
+			gm.optimiser->terminalSwapper(gm.populationManager->populationlist.v.at(0));
 
-			finalScore = gm.populationManager.populationlist.v.at(0).score;
-			finalSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
+			finalScore = gm.populationManager->populationlist.v.at(0).score;
+			finalSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
 			CPPUNIT_ASSERT(finalScore <= startScore);
 			CPPUNIT_ASSERT(finalSize == startSize);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).score != 0);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 1);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).score != 0);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 1);
 			if(finalScore < startScore) {
 				improvement = true;
 			} else {
 				loops++;
-				gm.populationManager.populationlist.v.clear();
+				gm.populationManager->populationlist.v.clear();
 				std::cerr << "\t\t\t * Improve Attempt: " <<  loops << std::endl;
 			}
 			break;
@@ -147,9 +147,9 @@ protected:
 
 	void testFunctionSwapper() {
 		std::cerr << "Optimiser:\t\t" <<  __func__ << std::endl;
-		gm.fitnessCases.clear();
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case"));
-		gm.populationManager.populationlist.v.clear();
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case"));
+		gm.populationManager->populationlist.v.clear();
 
 		PopulationMember p;
 		int startSize, finalSize;
@@ -158,26 +158,26 @@ protected:
 		int loops = 1;
 		while(!improvement) {
 			p.createSelf("TestCase",3);
-			gm.populationManager.populationlist.add(p);
-			gm.populationManager.scoreOneMember(0);
-			startScore = gm.populationManager.populationlist.v.at(0).score;
-			startSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 0);
+			gm.populationManager->populationlist.add(p);
+			gm.populationManager->scoreOneMember(0);
+			startScore = gm.populationManager->populationlist.v.at(0).score;
+			startSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 0);
 
-			gm.optimiser.functionSwapper(gm.populationManager.populationlist.v.at(0));
+			gm.optimiser->functionSwapper(gm.populationManager->populationlist.v.at(0));
 
-			finalScore = gm.populationManager.populationlist.v.at(0).score;
-			finalSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
+			finalScore = gm.populationManager->populationlist.v.at(0).score;
+			finalSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
 
 			CPPUNIT_ASSERT(finalScore <= startScore);
 			CPPUNIT_ASSERT(finalSize == startSize);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).score != 0);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 1);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).score != 0);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 1);
 			if(finalScore < startScore) {
 				improvement = true;
 			} else {
 				loops++;
-				gm.populationManager.populationlist.v.clear();
+				gm.populationManager->populationlist.v.clear();
 				std::cerr << "\t\t\t * Improve Attempt: " <<  loops << std::endl;
 			}
 		}
@@ -185,29 +185,29 @@ protected:
 
 	void testScoreRpnVec() {
 		std::cerr << "Optimiser:\t\t" <<  __func__ << std::endl;
-		gm.fitnessCases.clear();
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/testSinx"));
+		gm.fitnessCases->clear();
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/testSinx"));
 		PopulationMember p;
 		p.createSelf("TestCase",3);
 		CPPUNIT_ASSERT(p.rpnNodeVec.size() > 0);
-		gm.populationManager.populationlist.v.clear();
-		gm.populationManager.populationlist.add(p);
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 1);
-		gm.populationManager.scoreOneMember(0);
-		double score = gm.populationManager.populationlist.v.at(0).score;
+		gm.populationManager->populationlist.v.clear();
+		gm.populationManager->populationlist.add(p);
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+		gm.populationManager->scoreOneMember(0);
+		double score = gm.populationManager->populationlist.v.at(0).score;
 		CPPUNIT_ASSERT(score != 0);
-		double newScore = gm.optimiser.scoreRpnVec(p.rpnNodeVec,score);
+		double newScore = gm.optimiser->scoreRpnVec(p.rpnNodeVec,score);
 		CPPUNIT_ASSERT(fabs(score -newScore) < 0.000001);
 	}
 
 	void testOptimise() {
 		std::cerr << "Optimiser:\t\t" <<  __func__ << std::endl;
 
-		gm.fitnessCases.clear();
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/medium_test_case"));
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 0);
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/medium_test_case"));
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
 		PopulationMember p;
 		int startSize, finalSize;
 		double startScore, finalScore;
@@ -215,26 +215,26 @@ protected:
 		int loops = 1;
 		while(!improvement) {
 			p.createSelf("TestCase",3);
-			gm.populationManager.populationlist.add(p);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 1);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 0);
-			gm.populationManager.scoreOneMember(0);
-			startScore = gm.populationManager.populationlist.v.at(0).score;
-			startSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
+			gm.populationManager->populationlist.add(p);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 0);
+			gm.populationManager->scoreOneMember(0);
+			startScore = gm.populationManager->populationlist.v.at(0).score;
+			startSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
 
-			gm.optimiser.optimise(gm.settings.OPTIMISE_CUTTER_EVERY * gm.settings.OPTIMISE_FUNCTIONS_EVERY * gm.settings.OPTIMISE_TERMINALS_EVERY,false);
+			gm.optimiser->optimise(gm.settings->OPTIMISE_CUTTER_EVERY * gm.settings->OPTIMISE_FUNCTIONS_EVERY * gm.settings->OPTIMISE_TERMINALS_EVERY,false);
 
-			finalScore = gm.populationManager.populationlist.v.at(0).score;
-			finalSize  = gm.populationManager.populationlist.v.at(0).rpnNodeVec.size();
+			finalScore = gm.populationManager->populationlist.v.at(0).score;
+			finalSize  = gm.populationManager->populationlist.v.at(0).rpnNodeVec.size();
 			CPPUNIT_ASSERT(finalScore <= startScore);
 			CPPUNIT_ASSERT(finalSize <= startSize);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).score != 0);
-			CPPUNIT_ASSERT(gm.populationManager.populationlist.v.at(0).rpnNodeVec.size() > 1);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).score != 0);
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(0).rpnNodeVec.size() > 1);
 			if(finalScore < startScore) {
 				improvement = true;
 			} else {
 				loops++;
-				gm.populationManager.populationlist.v.clear();
+				gm.populationManager->populationlist.v.clear();
 				std::cerr << "\t\t\t * Improve Attempt: " <<  loops << std::endl;
 			}
 			break;

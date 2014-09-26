@@ -92,8 +92,8 @@ public:
 protected:
 
 	void loadFitness() {
-		gm.fitnessCases.clear();
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/medium_test_case"));
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/medium_test_case"));
 	}
 
 	void testDefaultConstructor() {
@@ -106,7 +106,7 @@ protected:
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
 		loadFitness();
 		PopulationMember p;
-		gm.nodeManager.initFunctions();
+		gm.nodeManager->initFunctions();
 		p.createSelf("TestCase",3);
 		CPPUNIT_ASSERT(p.rpnNodeVec.size() >= 4);
 	}
@@ -115,7 +115,7 @@ protected:
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
 		loadFitness();
 		PopulationMember p;
-		gm.nodeManager.initFunctions();
+		gm.nodeManager->initFunctions();
 		p.fillRandomNodes(2);
 		CPPUNIT_ASSERT(p.rpnNodeVec.size() >= 2);
 	}
@@ -133,12 +133,12 @@ protected:
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
 		loadFitness();
 		PopulationMember p;
-		gm.nodeManager.initFunctions();
+		gm.nodeManager->initFunctions();
 
 		// Create a smaller subset before we create this member
-		gm.fitnessCases.NUM_CONSTS = 0;
-		gm.fitnessCases.NUM_VARS   = 5;
-		gm.fitnessCases.TERMINALS  = 5;
+		gm.fitnessCases->NUM_CONSTS = 0;
+		gm.fitnessCases->NUM_VARS   = 5;
+		gm.fitnessCases->TERMINALS  = 5;
 
 		p.createSelf("TestCase",2);
 		double result = 9999999;
@@ -160,8 +160,8 @@ protected:
 
 	void testFadd() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		gm.nodeManager.initFunctions();
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(0));
+		gm.nodeManager->initFunctions();
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(0));
 
 
 		// Add the number inputs
@@ -176,7 +176,7 @@ protected:
 
 	void testFsubtract() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(1));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(1));
 
 		// Add the number inputs
 
@@ -190,7 +190,7 @@ protected:
 
 	void testFmultiply() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(2));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(2));
 
 		// Add the number inputs
 
@@ -204,7 +204,7 @@ protected:
 
 	void testFdivide() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(3));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(3));
 
 		// Add the number inputs
 
@@ -218,7 +218,7 @@ protected:
 
 	void testFsquared() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(4));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(4));
 
 		// Add the number inputs
 
@@ -232,7 +232,7 @@ protected:
 
 	void testFpercentme() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(5));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(5));
 
 		// Add the number inputs
 
@@ -249,7 +249,7 @@ protected:
 
 	void testFPC_change() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(6));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(6));
 
 		// Add the number inputs
 
@@ -263,7 +263,7 @@ protected:
 
 	void testFPC_of() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(7));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(7));
 
 		// Add the number inputs
 
@@ -277,7 +277,7 @@ protected:
 
 	void testFAVG_2() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(8));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(8));
 
 		// Add the number inputs
 
@@ -291,7 +291,7 @@ protected:
 
 	void testFmin_2() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(9));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(9));
 
 		// Add the number inputs
 
@@ -305,7 +305,7 @@ protected:
 
 	void testFmax_2() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(10));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(10));
 
 		// Add the number inputs
 
@@ -319,7 +319,7 @@ protected:
 
 	void testFAVG_4() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(11));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(11));
 
 		// Add the number inputs
 
@@ -333,7 +333,7 @@ protected:
 
 	void testFmin_4() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(12));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(12));
 
 		// Add the number inputs
 
@@ -347,7 +347,7 @@ protected:
 
 	void testFmax_4() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(13));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(13));
 
 		// Add the number inputs
 
@@ -361,7 +361,7 @@ protected:
 
 	void testFInt_Me() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(14));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(14));
 
 		// Add the number inputs
 
@@ -375,7 +375,7 @@ protected:
 
 	void testFsquare_rt() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(15));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(15));
 
 		// Add the number inputs
 
@@ -389,7 +389,7 @@ protected:
 
 	void testFif_4_1() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(16));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(16));
 
 		// Add the number inputs
 
@@ -404,7 +404,7 @@ protected:
 
 	void testFif_4_2() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(17));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(17));
 
 		// Add the number inputs
 
@@ -418,7 +418,7 @@ protected:
 
 	void testFunpercentme() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(18));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(18));
 
 		// Add the number inputs
 
@@ -433,7 +433,7 @@ protected:
 
 	void testFSum() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(19));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(19));
 
 		// Add the number inputs
 
@@ -447,7 +447,7 @@ protected:
 
 	void testFAbsSum2() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(20));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(20));
 
 		// Add the number inputs
 
@@ -461,7 +461,7 @@ protected:
 
 	void testFAbsSum4() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(21));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(21));
 
 		// Add the number inputs
 
@@ -475,7 +475,7 @@ protected:
 
 	void testFAbsMax2() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(22));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(22));
 
 		// Add the number inputs
 
@@ -489,7 +489,7 @@ protected:
 
 	void testFAbsMax4() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(23));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(23));
 
 		// Add the number inputs
 
@@ -503,7 +503,7 @@ protected:
 
 	void testFlipDouble() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(24));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(24));
 
 		// Add the number inputs
 
@@ -517,7 +517,7 @@ protected:
 
 	void testFRaiseE() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(25));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(25));
 
 		// Add the number inputs
 
@@ -532,7 +532,7 @@ protected:
 
 	void testFLnE() {
 		std::cerr << "PopulationMember:\t" <<  __func__ << std::endl;
-		simpleP.rpnNodeVec.push_back(gm.nodeManager.getFunctionByNum(26));
+		simpleP.rpnNodeVec.push_back(gm.nodeManager->getFunctionByNum(26));
 
 		// Add the number inputs
 

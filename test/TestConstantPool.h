@@ -109,13 +109,13 @@ protected:
 
 	void testLoadFromFitnessCase() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
-		CPPUNIT_ASSERT(gm.fitnessCases.cp.constantSet.size() == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->cp.constantSet.size() == 20);
 		for (unsigned x = 0; x < 20; x++) {
-			CPPUNIT_ASSERT(gm.fitnessCases.cp.constantSet.at(x) != 0 );
+			CPPUNIT_ASSERT(gm.fitnessCases->cp.constantSet.at(x) != 0 );
 		}
 	}
 
@@ -124,10 +124,10 @@ protected:
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
 		FitnessCases fc;
 
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
 		int retries = 5;
 		bool found = false;
 		while(retries > 0) {
@@ -135,7 +135,7 @@ protected:
 			p.createSelf("Test",6);
 			for (unsigned x = 0; x < p.rpnNodeVec.size(); x++) {
 				if (p.rpnNodeVec.at(x).isTerminal) {
-					if ( p.rpnNodeVec.at(x).tNo >= gm.fitnessCases.NUM_VARS) {
+					if ( p.rpnNodeVec.at(x).tNo >= gm.fitnessCases->NUM_VARS) {
 						found = true; break;
 					}
 				}
@@ -151,16 +151,16 @@ protected:
 	void testSolveWithConstants() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
 		FitnessCases fc;
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
 
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(0).size() == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(0).size() == 294);
 		// Solve the first 10 fitness cases for each of 5 randomly generated
 		// large nodetrees.
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 0);
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
 		int retries = 5;
 		while(retries > 0) {
 			PopulationMember p;
@@ -170,7 +170,7 @@ protected:
 				double result = 99999;
 
 				CPPUNIT_ASSERT(result == 99999);
-				result = p.rpnVecSolveSelf(&gm.fitnessCases.cases[x][0]);
+				result = p.rpnVecSolveSelf(&gm.fitnessCases->cases[x][0]);
 				CPPUNIT_ASSERT(result != 99999);
 			}
 			retries --;
@@ -181,26 +181,26 @@ protected:
 	// enabled
 	void testSaveWithConstants() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
 
 		// Generate a population of 10
-		gm.settings.SAVE_FILE_PREFIX = "test/testConsantsSave";
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 0);
+		gm.settings->SAVE_FILE_PREFIX = "test/testConsantsSave";
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
 		for (int var = 0; var < 10; ++var) {
 			PopulationMember p;
 			p.createSelf("testSaveWithConstants",4);
-			gm.populationManager.populationlist.add(p);
-			gm.populationManager.scoreOneMember(var);
+			gm.populationManager->populationlist.add(p);
+			gm.populationManager->scoreOneMember(var);
 		}
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 10);
-		gm.populationManager.sortByScore();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 10);
+		gm.populationManager->sortByScore();
 
 		// Save members
-		gm.populationManager.writeMembersToDisk();
+		gm.populationManager->writeMembersToDisk();
 
 		// Check that they are all saved in the files
 		// Check that the constants are all the same between files
@@ -231,20 +231,20 @@ protected:
 			remove(saveName);
 			ifile.close();
 		}
-		gm.populationManager.removeMembersFromDisk();
-		gm.jsonConfig.updateSettings(gm.settings);
+		gm.populationManager->removeMembersFromDisk();
+		gm.jsonConfig->updateSettings(gm.settings);
 	}
 
 	void testLoadWithConstants() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
 		// we need to check that the constant string which we load from file, re-saves to the exact
 		// same constant string and the program is valid
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
-		std::vector<double> original = gm.fitnessCases.cp.constantSet;
-		CPPUNIT_ASSERT(original == gm.fitnessCases.cp.constantSet);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
+		std::vector<double> original = gm.fitnessCases->cp.constantSet;
+		CPPUNIT_ASSERT(original == gm.fitnessCases->cp.constantSet);
 
 		PopulationManager pm;
 		CPPUNIT_ASSERT(pm.populationlist.v.size() == 0);
@@ -255,25 +255,25 @@ protected:
 		CPPUNIT_ASSERT(pm.populationlist.v.size() == 2);
 
 
-		CPPUNIT_ASSERT(original != gm.fitnessCases.cp.constantSet);
-		CPPUNIT_ASSERT(gm.fitnessCases.cp.constantSet.size() == 20);
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(0).at(274) == gm.fitnessCases.cp.constantSet.at(0));
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(10).at(275) == gm.fitnessCases.cp.constantSet.at(1));
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(20).at(276) == gm.fitnessCases.cp.constantSet.at(2));
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(0).at(274) == 10.5);
+		CPPUNIT_ASSERT(original != gm.fitnessCases->cp.constantSet);
+		CPPUNIT_ASSERT(gm.fitnessCases->cp.constantSet.size() == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(0).at(274) == gm.fitnessCases->cp.constantSet.at(0));
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(10).at(275) == gm.fitnessCases->cp.constantSet.at(1));
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(20).at(276) == gm.fitnessCases->cp.constantSet.at(2));
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(0).at(274) == 10.5);
 	}
 
 	// Check that the constant sets save and load giving the same score
 	void testLoadSaveEquality() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
 
-		gm.settings.SAVE_FILE_PREFIX = "testLoadSaveEquality-nodetree";
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 0);
+		gm.settings->SAVE_FILE_PREFIX = "testLoadSaveEquality-nodetree";
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
 
 		double scores[5];
 		int retries = 5;
@@ -281,41 +281,41 @@ protected:
 		while (retries > loop) {
 			PopulationMember p;
 			p.createSelf("testLoadSaveEquality",6);
-			gm.populationManager.populationlist.add(p);
-			gm.populationManager.scoreOneMember(loop);
-			scores[loop] = gm.populationManager.populationlist.v.at(loop).score;
+			gm.populationManager->populationlist.add(p);
+			gm.populationManager->scoreOneMember(loop);
+			scores[loop] = gm.populationManager->populationlist.v.at(loop).score;
 			loop++;
 		}
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 5);
-		gm.populationManager.writeMembersToDisk();
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 0);
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 5);
+		gm.populationManager->writeMembersToDisk();
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
 
 
-		gm.populationManager.loadMemberFromFilename("testLoadSaveEquality-nodetree.0"); remove("testLoadSaveEquality-nodetree.0");
-		gm.populationManager.loadMemberFromFilename("testLoadSaveEquality-nodetree.1"); remove("testLoadSaveEquality-nodetree.1");
-		gm.populationManager.loadMemberFromFilename("testLoadSaveEquality-nodetree.2"); remove("testLoadSaveEquality-nodetree.2");
-		gm.populationManager.loadMemberFromFilename("testLoadSaveEquality-nodetree.3"); remove("testLoadSaveEquality-nodetree.3");
-		gm.populationManager.loadMemberFromFilename("testLoadSaveEquality-nodetree.4"); remove("testLoadSaveEquality-nodetree.4");
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 5);
+		gm.populationManager->loadMemberFromFilename("testLoadSaveEquality-nodetree.0"); remove("testLoadSaveEquality-nodetree.0");
+		gm.populationManager->loadMemberFromFilename("testLoadSaveEquality-nodetree.1"); remove("testLoadSaveEquality-nodetree.1");
+		gm.populationManager->loadMemberFromFilename("testLoadSaveEquality-nodetree.2"); remove("testLoadSaveEquality-nodetree.2");
+		gm.populationManager->loadMemberFromFilename("testLoadSaveEquality-nodetree.3"); remove("testLoadSaveEquality-nodetree.3");
+		gm.populationManager->loadMemberFromFilename("testLoadSaveEquality-nodetree.4"); remove("testLoadSaveEquality-nodetree.4");
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 5);
 		loop = 0;
 		while (retries > loop) {
-			gm.populationManager.scoreOneMember(loop);
-			CPPUNIT_ASSERT(scores[loop] == gm.populationManager.populationlist.v.at(loop).score);
+			gm.populationManager->scoreOneMember(loop);
+			CPPUNIT_ASSERT(scores[loop] == gm.populationManager->populationlist.v.at(loop).score);
 			loop++;
 		}
-		gm.populationManager.removeMembersFromDisk();
-		gm.jsonConfig.updateSettings(gm.settings);
+		gm.populationManager->removeMembersFromDisk();
+		gm.jsonConfig->updateSettings(gm.settings);
 	}
 
 	void testConstantOptimisation() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/testSinx_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 21);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 1);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/testSinx_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 21);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 1);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
 
-		ConstantPool cp = gm.fitnessCases.cp;
+		ConstantPool cp = gm.fitnessCases->cp;
 		CPPUNIT_ASSERT(cp.constantSet.size() == 20);
 
 		// Run the optimisation
@@ -330,30 +330,30 @@ protected:
 	void testCliSolverWithConstants() {
 		std::cerr << "ConstantPool:\t\t" <<  __func__ << std::endl;
 		// First load a fitness case, we are going to steal one of the examples
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case_20c"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 294);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 20);
-		double first = gm.fitnessCases.cases.at(0).at(274);
-		double second = gm.fitnessCases.cases.at(0).at(275);
-		gm.populationManager.populationlist.v.clear();
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 0);
-		gm.populationManager.loadMemberFromFilename("test/constantSaveNodetree.0");
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case_20c"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 20);
+		double first = gm.fitnessCases->cases.at(0).at(274);
+		double second = gm.fitnessCases->cases.at(0).at(275);
+		gm.populationManager->populationlist.v.clear();
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
+		gm.populationManager->loadMemberFromFilename("test/constantSaveNodetree.0");
 
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 1);
-		CPPUNIT_ASSERT(first != gm.fitnessCases.cases.at(0).at(274));
-		CPPUNIT_ASSERT(second != gm.fitnessCases.cases.at(0).at(275));
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(0).at(274) == 10.5);
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.at(0).size() == 294);
-		gm.fitnessCases.SCALING_ENABLED = false;
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+		CPPUNIT_ASSERT(first != gm.fitnessCases->cases.at(0).at(274));
+		CPPUNIT_ASSERT(second != gm.fitnessCases->cases.at(0).at(275));
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(0).at(274) == 10.5);
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.at(0).size() == 294);
+		gm.fitnessCases->SCALING_ENABLED = false;
 		// Now load a string fitness case test
-		CPPUNIT_ASSERT(gm.fitnessCases.cases.size() == 3000);
-		gm.fitnessCases.cliCase = gm.fitnessCases.cases.at(0);
-		CPPUNIT_ASSERT(gm.fitnessCases.cliCase.size() == 294);
+		CPPUNIT_ASSERT(gm.fitnessCases->cases.size() == 3000);
+		gm.fitnessCases->cliCase = gm.fitnessCases->cases.at(0);
+		CPPUNIT_ASSERT(gm.fitnessCases->cliCase.size() == 294);
 
 		double result = 10000;
 		CPPUNIT_ASSERT(result == 10000);
-		result = gm.populationManager.solveVecCaseSet(0);
+		result = gm.populationManager->solveVecCaseSet(0);
 		CPPUNIT_ASSERT(result != 10000 );
 
 	}
@@ -363,15 +363,15 @@ protected:
 		PopulationManager pm;
 
 
-		CPPUNIT_ASSERT(gm.fitnessCases.loadFile("fitness_cases/large_test_case"));
-		CPPUNIT_ASSERT(gm.fitnessCases.TERMINALS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_VARS == 274);
-		CPPUNIT_ASSERT(gm.fitnessCases.NUM_CONSTS == 0);
-		gm.nodeManager.setupSelf();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/large_test_case"));
+		CPPUNIT_ASSERT(gm.fitnessCases->TERMINALS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_VARS == 274);
+		CPPUNIT_ASSERT(gm.fitnessCases->NUM_CONSTS == 0);
+		gm.nodeManager->setupSelf();
 		pm.loadMemberFromFilename("test/noconstantSaveNodetree.0");
-		CPPUNIT_ASSERT(gm.populationManager.populationlist.v.size() == 1);
-		gm.fitnessCases.cliCase = gm.fitnessCases.cases[0];
-		CPPUNIT_ASSERT(gm.fitnessCases.cliCase.size() == 274);
+		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+		gm.fitnessCases->cliCase = gm.fitnessCases->cases[0];
+		CPPUNIT_ASSERT(gm.fitnessCases->cliCase.size() == 274);
 
 		double result = 10000;
 		CPPUNIT_ASSERT(result == 10000);
