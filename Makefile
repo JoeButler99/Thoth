@@ -41,6 +41,19 @@ $(BUILD)profiler.o: source-files
 
 
 #
+#	StubbedProfiler
+#
+StubbedProfiler: $(BIN)StubbedProfiler
+
+$(BIN)StubbedProfiler: $(BUILD)StubbedProfiler.o
+	$(CC) $(BUILD)*.o -o $(BIN)StubbedProfiler $(MAINLINKS) -lboost_system -lboost_timer
+	
+$(BUILD)StubbedProfiler.o: source-files
+	rm -f $(BUILD)Thoth.o $(BUILD)test_cases.o $(BUILD)TestRunner.o $(BUILD)profiler.o
+	$(CC) $(CCFLAGS) $(SRC)StubbedProfiler.cpp -o $(BUILD)StubbedProfiler.o
+
+
+#
 #	Test Suite
 #
 test: $(BIN)test_cases
