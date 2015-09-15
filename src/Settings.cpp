@@ -25,7 +25,7 @@
 #include "Settings.h"
 
 // Constructor with some default initialisers
-Settings::Settings() :
+Settings::Settings() :  // TODO - would be better if these defaults came from somewhere else we can better test against.
 	FUNCTION_SET("Basic"),
 	POPULATION(8000),
 	KEEP_TOP_PERCENT(25),

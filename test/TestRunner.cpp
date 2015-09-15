@@ -31,6 +31,7 @@
 // Get the test classes
 //#include "TestArgParser.h"
 //#include "TestJsonConfigLoader.h"
+#include "TestSettings.h"
 #include "TestRNG.h"
 #include "TestFitnessCases.h"
 #include "TestFunction.h"
@@ -76,6 +77,7 @@ int main(int argc, char **argv) {
 
 //    runner.addTest(TestArgParser::suite());
 //    runner.addTest(TestJsonConfigLoader::suite());
+    runner.addTest(TestSettings::suite());
     runner.addTest(TestRNG::suite());
     runner.addTest(TestFitnessCases::suite());
     runner.addTest(TestFunction::suite());
