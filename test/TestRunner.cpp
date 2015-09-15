@@ -29,7 +29,7 @@
 #include <stdio.h>
 
 // Get the test classes
-//#include "TestArgParser.h"
+#include "TestArgParser.h"
 //#include "TestJsonConfigLoader.h"
 #include "TestSettings.h"
 #include "TestRNG.h"
@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
     CppUnit::TextUi::TestRunner runner;
     CppUnit::TestResultCollector result;
 
-//    runner.addTest(TestArgParser::suite());
+    runner.addTest(TestArgParser::suite());
 //    runner.addTest(TestJsonConfigLoader::suite());
     runner.addTest(TestSettings::suite());
     runner.addTest(TestRNG::suite());

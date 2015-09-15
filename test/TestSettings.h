@@ -24,11 +24,12 @@ public:
 		CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestSettings");
 
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestSettings>("Test testConstructor", &TestSettings::testConstructor));
-		suiteOfTests->addTest(new CppUnit::TestCaller<TestSettings>("Test testDisplaySettings", &TestSettings::testDisplaySettings));
+		//suiteOfTests->addTest(new CppUnit::TestCaller<TestSettings>("Test testDisplaySettings", &TestSettings::testDisplaySettings));
 		return suiteOfTests;
 	}
 protected:
 	void testConstructor() {
+		std::cerr << "Settings:\t\t" <<  __func__ << std::endl;
 		// Test good options
 		Settings settings;
 
@@ -36,16 +37,25 @@ protected:
 		CPPUNIT_ASSERT(settings.SAVE_FILE_PREFIX == "nodetree");
 		CPPUNIT_ASSERT(settings.POPULATION == 8000);
 		CPPUNIT_ASSERT(settings.LOAD_SAVED == true);
+		CPPUNIT_ASSERT_DOUBLES_EQUAL(settings.NODE_WEIGHT,1.0,0.001);
 
 
 		// Now just test one item of each type.
+		settings.SAVE_FILE_PREFIX = "test";
 		settings.POPULATION = 4000;
+		settings.LOAD_SAVED = false;
+		settings.NODE_WEIGHT = 0.76;
+
+		CPPUNIT_ASSERT(settings.SAVE_FILE_PREFIX == "test");
 		CPPUNIT_ASSERT(settings.POPULATION == 4000);
+		CPPUNIT_ASSERT(settings.LOAD_SAVED == false);
+		CPPUNIT_ASSERT_DOUBLES_EQUAL(settings.NODE_WEIGHT,0.76,0.001);
 
 	}
 
 	void testDisplaySettings() {
-		CPPUNIT_ASSERT(false);
+		// TODO - This just dumps class properties to the terminal. Might be a better way of doing that
+		// If so then test it.
 	}
 };
 

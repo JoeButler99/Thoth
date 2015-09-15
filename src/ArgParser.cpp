@@ -110,6 +110,7 @@ void ArgParser::loadArgs(int argc, char* argv[]) {
 
 		}
 	} else {
+		// TODO - move these defaults to another more easily testable place. See Settings class too.
 		// When no arguments are passed in, we setup defaults to
 		// let a default config file handle things
 		action       = "improve";

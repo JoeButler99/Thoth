@@ -50,12 +50,16 @@ public:
 protected:
 	void testDefultConstructor() {
 		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		ArgParser argparser;
 
-		CPPUNIT_ASSERT(false);
+		CPPUNIT_ASSERT(argparser.numVars == 0);
+		CPPUNIT_ASSERT(argparser.isValid());
 	}
 
 	void testLoadArgsSolver() {
 		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		ArgParser argparser;
+
 
 		CPPUNIT_ASSERT(false);
 	}
