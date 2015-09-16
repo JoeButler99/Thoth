@@ -10,3 +10,4 @@ nodetree.*
 conf/*.json
 .settings
 profiling
+work/*
