@@ -41,9 +41,9 @@ public:
 
 
 	void usage(bool exit, int exitcode);
-	void loadArgs(int argc, char* argv[]);
+	void loadArgs(int argc, char* argv[],bool dieOnError = true);
 	void displayArgs();
-	bool isValid();
+	bool isValid(bool dieOnError = true);
 	ArgParser();
 	~ArgParser();
 };

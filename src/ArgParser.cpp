@@ -48,7 +48,7 @@ void ArgParser::usage(bool exitAfter, int exitcode) {
 }
 
 // isValid checks that the arguments are suitable to continue
-bool ArgParser::isValid() {
+bool ArgParser::isValid(bool dieOnError) {
 	if (action == "solve") {
 		if (numVars == 0) {
 			error_msg("\nERROR: --num-vars is required to solve a case");
@@ -63,14 +63,17 @@ bool ArgParser::isValid() {
 	} else if (action == "improve") {
 		// Should be fine with defaults. This might change in the future.
 	} else {
-		error_msg("\nERROR: Unknown action. Unable to continue.");
-		usage(true,1);
+		if (dieOnError) {
+			error_msg("\nERROR: Unknown action. Unable to continue.");
+			usage(true,1);
+		} else {
+			return false;
+		}
 	}
-
 	return true;
 }
 
-void ArgParser::loadArgs(int argc, char* argv[]) {
+void ArgParser::loadArgs(int argc, char * argv[],bool dieOnError) {
 	if (argc > 1) {
 		for (int i = 1; i < argc; i++) {
 			if (i + 1 != argc)  { // Check that we haven't finished parsing already
@@ -119,7 +122,7 @@ void ArgParser::loadArgs(int argc, char* argv[]) {
 		fitnessCases = "";
 		configFile   = "conf/config.json";
 	}
-	isValid();
+	isValid(dieOnError);
 }
 
 void ArgParser::displayArgs() {
