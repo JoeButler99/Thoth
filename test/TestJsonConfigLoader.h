@@ -73,6 +73,7 @@ protected:
 		// Test the default constructor settings
 
 		CPPUNIT_ASSERT(settings.FUNCTION_SET == "Basic");
+		CPPUNIT_ASSERT(settings.ERROR_FUNCTION == "ERROR_SQUARED");
 		CPPUNIT_ASSERT(settings.POPULATION == 8000);
 		CPPUNIT_ASSERT(settings.KEEP_TOP_PERCENT == 25);
 		CPPUNIT_ASSERT_DOUBLES_EQUAL(settings.NODE_WEIGHT,1.0,0.001);
@@ -109,6 +110,7 @@ protected:
 		CPPUNIT_ASSERT(jcl.updateSettings(&settings));
 
 		CPPUNIT_ASSERT(settings.FUNCTION_SET == "FinanceFull");
+		CPPUNIT_ASSERT(settings.ERROR_FUNCTION == "ABS_ERROR");
 		CPPUNIT_ASSERT(settings.POPULATION == 800);
 		CPPUNIT_ASSERT(settings.KEEP_TOP_PERCENT == 25);
 		CPPUNIT_ASSERT_DOUBLES_EQUAL(settings.NODE_WEIGHT,0.05,0.001);

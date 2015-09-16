@@ -94,6 +94,7 @@ bool JsonConfigLoader::updateSettings(Settings *settings) {
 
 	// Update the strings
 	settings->FUNCTION_SET     = root.get("FUNCTION_SET",settings->FUNCTION_SET).asString();
+	settings->ERROR_FUNCTION   = root.get("ERROR_FUNCTION",settings->ERROR_FUNCTION).asString();
 	settings->SAVE_FILE_PREFIX = root.get("SAVE_FILE_PREFIX",settings->SAVE_FILE_PREFIX).asString();
 	settings->GUESSES_FILE     = root.get("GUESSES_FILE",settings->GUESSES_FILE).asString();
 	if (settings->FITNESS_CASE_FILE == "") {

@@ -27,6 +27,7 @@
 // Constructor with some default initialisers
 Settings::Settings() :  // TODO - would be better if these defaults came from somewhere else we can better test against.
 	FUNCTION_SET("Basic"),
+	ERROR_FUNCTION("ERROR_SQUARED"),
 	POPULATION(8000),
 	KEEP_TOP_PERCENT(25),
 	NODE_WEIGHT(1),

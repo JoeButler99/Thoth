@@ -35,6 +35,7 @@ protected:
 
 		// Test the default constructor settings
 		CPPUNIT_ASSERT(settings.SAVE_FILE_PREFIX == "nodetree");
+		CPPUNIT_ASSERT(settings.ERROR_FUNCTION == "ERROR_SQUARED");
 		CPPUNIT_ASSERT(settings.POPULATION == 8000);
 		CPPUNIT_ASSERT(settings.LOAD_SAVED == true);
 		CPPUNIT_ASSERT_DOUBLES_EQUAL(settings.NODE_WEIGHT,1.0,0.001);
