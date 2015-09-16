@@ -41,10 +41,12 @@
 #include "TestPopulationManager.h"
 #include "TestOptimiser.h"
 #include "TestEvolutionManager.h"
+#include "TestConstantPool.h"
+#include "TestFunctionSets.h"
 #include "../src/RNG.h"
 #include "../src/Globals.h"
 #include "../src/GlobalManager.h"
-#include "TestConstantPool.h"
+
 
 
 ArgParser ap;
@@ -79,6 +81,7 @@ int main(int argc, char **argv) {
     runner.addTest(TestRNG::suite());
     runner.addTest(TestFitnessCases::suite());
     runner.addTest(TestFunction::suite());
+    runner.addTest(TestFunctionSets::suite());
     runner.addTest(TestNode::suite());
     runner.addTest(TestNodeManager::suite());
     runner.addTest(TestPopulationMember::suite());
