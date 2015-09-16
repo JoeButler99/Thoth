@@ -30,7 +30,7 @@
 
 // Get the test classes
 #include "TestArgParser.h"
-//#include "TestJsonConfigLoader.h"
+#include "TestJsonConfigLoader.h"
 #include "TestSettings.h"
 #include "TestRNG.h"
 #include "TestFitnessCases.h"
@@ -69,14 +69,12 @@ int main(int argc, char **argv) {
     gm.optimiser->silence = true;
     gm.evolutionManager->silence = true;
 
-
-
     std::cout << "Creating Test Suites:" << std::endl;
     CppUnit::TextUi::TestRunner runner;
     CppUnit::TestResultCollector result;
 
     runner.addTest(TestArgParser::suite());
-//    runner.addTest(TestJsonConfigLoader::suite());
+    runner.addTest(TestJsonConfigLoader::suite());
     runner.addTest(TestSettings::suite());
     runner.addTest(TestRNG::suite());
     runner.addTest(TestFitnessCases::suite());
@@ -89,12 +87,10 @@ int main(int argc, char **argv) {
     runner.addTest(TestEvolutionManager::suite());
     runner.addTest(TestConstantPool::suite());
 
-
-    std::cout<< "Running the unit tests."<< std::endl;
+    std::cout<< "Running the unit tests.\n"<< std::endl;
     runner.run("",false,true,false);
 
     remove(gm.settings->GUESSES_FILE.c_str());
-
 
     return runner.result().wasSuccessful() ? 0 : 1;
 }

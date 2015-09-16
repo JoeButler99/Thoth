@@ -48,7 +48,7 @@ public:
 	}
 protected:
 	void testDefultConstructor() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		std::cerr << "ArgParser:\t\t" <<  __func__ << std::endl;
 		ArgParser argparser;
 
 		CPPUNIT_ASSERT(argparser.numVars == 0);
@@ -56,7 +56,7 @@ protected:
 	}
 
 	void testLoadArgsSolver() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		std::cerr << "ArgParser:\t\t" <<  __func__ << std::endl;
 		ArgParser argparser;
 
 		// The weird casts are used to create an arrgay live char * argv[] in main
@@ -83,7 +83,7 @@ protected:
 	}
 
 	void testLoadArgsFail() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		std::cerr << "ArgParser:\t\t" <<  __func__ << std::endl;
 
 		ArgParser argparser;
 		// The weird casts are used to create an arrgay live char * argv[] in main

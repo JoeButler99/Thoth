@@ -41,6 +41,7 @@ protected:
 
 
 		// Now just test one item of each type.
+		// This is actually tested fully in TestJsonConfigLoader.h
 		settings.SAVE_FILE_PREFIX = "test";
 		settings.POPULATION = 4000;
 		settings.LOAD_SAVED = false;
