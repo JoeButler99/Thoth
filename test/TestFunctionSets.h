@@ -30,13 +30,29 @@ public:
 	}
 protected:
 	void testConstructor() {
-		std::cerr << "Settings:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(false);
+		std::cerr << "FunctionSets:\t\t" <<  __func__ << std::endl;
+		std::string name("TestFunctionSet");
+
+		FunctionSet::functionSets.clear();
+		FunctionSet fs(name);
+		CPPUNIT_ASSERT(fs.name == "TestFunctionSet");
+		CPPUNIT_ASSERT(fs.functionList.size() == 0);
+		CPPUNIT_ASSERT(FunctionSet::functionSets.size() == 0);
 	}
 
 	void testBuildFunctionSets() {
-		std::cerr << "Settings:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(false);
+		std::cerr << "FunctionSets:\t\t" <<  __func__ << std::endl;
+		std::string name("TestFunctionSet");
+		FunctionSet::functionSets.clear();
+		FunctionSet fs(name);
+		CPPUNIT_ASSERT(fs.name == "TestFunctionSet");
+		CPPUNIT_ASSERT(fs.functionList.size() == 0);
+		CPPUNIT_ASSERT(FunctionSet::functionSets.size() == 0);
+
+		FunctionSet::buildFunctionSets();
+		CPPUNIT_ASSERT(FunctionSet::functionSets.size() > 0);
+		CPPUNIT_ASSERT(FunctionSet::functionSets.at(0).name == "Basic");
+		CPPUNIT_ASSERT(FunctionSet::functionSets.at(0).functionList.size() == 4);
 	}
 };
 
