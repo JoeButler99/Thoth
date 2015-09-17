@@ -43,6 +43,7 @@
 #include "TestEvolutionManager.h"
 #include "TestConstantPool.h"
 #include "TestFunctionSets.h"
+#include "TestErrorFunction.h"
 #include "../src/RNG.h"
 #include "../src/Globals.h"
 #include "../src/GlobalManager.h"
@@ -84,6 +85,7 @@ int main(int argc, char **argv) {
     runner.addTest(TestFunctionSets::suite());
     runner.addTest(TestNode::suite());
     runner.addTest(TestNodeManager::suite());
+    runner.addTest(TestErrorFunctions::suite());
     runner.addTest(TestPopulationMember::suite());
     runner.addTest(TestPopulationManager::suite());
     runner.addTest(TestOptimiser::suite());
