@@ -26,6 +26,7 @@
 #include <omp.h>
 #include "PopulationManager.h"
 
+
 // This is what sorts the populationlist array by their scores
 struct sort_pop_member_by_score
 {
@@ -75,9 +76,7 @@ void PopulationManager::scoreOneMember(int memberid) {
 	if ( populationlist.v.at(memberid).hasChanged ) {
 		// Loop all fitness cases
 		for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
-			double result = populationlist.v[memberid].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]);
-			double score = result - gm.fitnessCases->targets[y];
-			if (score < 0.0) { score *= -1.0;}
+			double score = gm.errorFunction( populationlist.v[memberid].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]) - gm.fitnessCases->targets[y]);
 			if (scaling) {
 				score *= gm.fitnessCases->multipliers[y];
 			}
@@ -103,10 +102,8 @@ void PopulationManager::scoreAllVecRpn() {
 				double total_away = 0.0;
 				// Loop all fitness cases
 				for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
+					double score = gm.errorFunction(populationlist.v[x].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]) - gm.fitnessCases->targets[y]);
 
-					double result = populationlist.v[x].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]);
-					double score = result - gm.fitnessCases->targets[y];
-					if (score < 0.0) { score *= -1.0;}
 					if (scaling) {
 						score *= gm.fitnessCases->multipliers[y];
 					}

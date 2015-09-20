@@ -29,6 +29,7 @@
 #include "ArgParser.h"
 #include "JsonConfigLoader.h"
 #include "Settings.h"
+#include "ErrorFunctions.h"
 
 
 // Forward Declarations
@@ -39,7 +40,7 @@ class Optimiser;
 class EvolutionManager;
 class PopulationMember;
 
-
+typedef double (*error_function)(double);
 
 // Global manager exists to hold together what were previously held in single global objects
 class GlobalManager {
@@ -52,11 +53,13 @@ public:
 	PopulationManager * populationManager;
 	Optimiser		  * optimiser;
 	EvolutionManager  * evolutionManager;
+	error_function errorFunction;
+
 	GlobalManager();
 	~GlobalManager();
 	void initialise(ArgParser * argParser,JsonConfigLoader * jsonConfig,Settings * settings,
 					  FitnessCases * fitnessCases,NodeManager * nodeManager,PopulationManager * populationManager,
-					  Optimiser * optimiser,EvolutionManager * evolutionManager );
+					  Optimiser * optimiser,EvolutionManager * evolutionManager);
 	void loadSettings(int argc, char* argv[],bool profiling = false);
 };
 

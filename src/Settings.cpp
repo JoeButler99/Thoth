@@ -65,6 +65,7 @@ Settings::~Settings() {}
 void Settings::displaySettings() {
 	question_msg("Thoth Settings - (JSON & Defaults):\n\n");
 	std::cout << "FUNCTION_SET:\t\t\t" << FUNCTION_SET  << std::endl;
+	std::cout << " ERROR_FUNCTION:\t\t" << ERROR_FUNCTION << std::endl;
 	std::cout << " POPULATION:\t\t\t" << POPULATION  << std::endl;
 	std::cout << " KEEP_TOP_PERCENT:\t\t" << KEEP_TOP_PERCENT  << std::endl;
 	std::cout << " NODE_WEIGHT:\t\t\t" << NODE_WEIGHT  << std::endl;

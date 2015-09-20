@@ -41,17 +41,25 @@ void GlobalManager::initialise(ArgParser * ap,JsonConfigLoader * jcl,Settings * 
 	populationManager = pm;
 	optimiser         = o;
 	evolutionManager  = em;
+	errorFunction     = ErrorFunction::ABS_ERROR;
 }
 
 
 void GlobalManager::loadSettings(int argc, char* argv[],bool profiling) {
 	if (!profiling) { argParser->loadArgs(argc,argv); }
 
+
 	if (argParser->action == "solve") {
 		// Nothing to do here. (for now)
+		// TODO - need to select error function from nodetree
+
 	} else {
 		jsonConfig->loadFile(argParser->configFile);
 		jsonConfig->updateSettings(settings);
+
+		if (settings->ERROR_FUNCTION == "ERROR_SQUARED") {
+			errorFunction = ErrorFunction::ERROR_SQUARED;
+		}
 
 		// Args can override some settings from the config
 		if (!profiling) {
