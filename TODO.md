@@ -6,3 +6,7 @@
 Other
 =====
  * look into auto keyword for better typing across architectures
+ * Option to purge non-unique nodetrees for better diversity
+ * show score minus size cost in output
+ * Use of exceptions for config errors
+ * TestConfigException

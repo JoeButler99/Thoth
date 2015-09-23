@@ -230,7 +230,7 @@ void PopulationManager::writeGuesses() {
 }
 
 
-void PopulationManager::loadMemberFromFilename(const char * filename) {
+void PopulationManager::loadMemberFromFilename(const char * filename) throw(ConfigException) {
 	std::ifstream loadfile(filename);
 	std::vector<Node> rpn_node_vec;
 	if (loadfile) {
@@ -299,7 +299,7 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 	}
 }
 
-void PopulationManager::loadMembersFromDisk() {
+void PopulationManager::loadMembersFromDisk() throw(ConfigException) {
 	for (unsigned int x = 0; x < gm.settings->LOAD_TOTAL; x++) {
 		char filename[100];
 		sprintf(filename,"%s.%d",gm.settings->SAVE_FILE_PREFIX.c_str(),x);

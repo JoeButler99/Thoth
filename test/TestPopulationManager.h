@@ -56,6 +56,7 @@ public:
 		//suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test add node to file",&TestPopulationManager::testAddNodesToFile));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test AddConstantsToFile",&TestPopulationManager::testAddConstantsToFile));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test load members from disk",&TestPopulationManager::testLoadMembersFromDisk));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test load members from disk",&TestPopulationManager::testLoadMemberFromFilenameErrorFunction));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test load members from filename",&TestPopulationManager::testLoadMemberFromFilename));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test score one member",&TestPopulationManager::testScoreOneMember));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test solve vec case set",&TestPopulationManager::testSolveVecCaseSet));
@@ -309,6 +310,47 @@ protected:
 		}
 		gm.populationManager->removeMembersFromDisk();
 		gm.jsonConfig->updateSettings(gm.settings);
+	}
+
+	void testLoadMemberFromFilenameErrorFunction() {
+		std::cerr << "PopulationManager:\t" <<  __func__ << std::endl;
+		// Test the loading of testCaseMembers which have are configured with
+		// different options for ERROR_FUNCTION
+
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/testSinx"));
+
+
+		char saveName[50];
+		for (unsigned x = 0; x < 6; x++) {
+			sprintf(saveName,"%s.%d","test/testCaseMember",x);
+			std::ifstream ifile(saveName);
+			CPPUNIT_ASSERT(ifile);
+			gm.populationManager->populationlist.v.clear();
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
+
+			switch (x) {
+			case 3:
+				gm.populationManager->loadMemberFromFilename(saveName);
+				CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+				CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ERROR_SQUARED");
+				break;
+			case 5:
+				CPPUNIT_ASSERT_THROW(gm.populationManager->loadMemberFromFilename(saveName),ConfigException);
+				break;
+
+			default:
+				// This is where 2 and 3 will both endup
+				// if more error funcitons are added they should end up here
+				gm.populationManager->loadMemberFromFilename(saveName);
+				CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+				CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ABS_ERROR");
+				break;
+			}
+
+		}
+
+
 	}
 
 	void testLoadMemberFromFilename() {

@@ -31,6 +31,7 @@
 #include "PopulationMember.h"
 #include "TvectorPM.h"
 #include "ErrorFunctions.h"
+#include "ConfigException.h"
 
 
 
@@ -55,8 +56,8 @@ public:
 	void writeGuesses();
 	void addNodesToFile(int population_member_id, std::ofstream * writefile,int depth);
 	void addConstantsToFile(std::ofstream * writefile);
-	void loadMembersFromDisk();
-	void loadMemberFromFilename(const char * filename);
+	void loadMembersFromDisk() throw(ConfigException);
+	void loadMemberFromFilename(const char * filename) throw(ConfigException);
 	void scoreOneMember(int memberid);
 	double solveVecCaseSet(int memberid);
 
