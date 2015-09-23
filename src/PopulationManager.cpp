@@ -269,6 +269,9 @@ void PopulationManager::loadMemberFromFilename(const char * filename) throw(Conf
 								gm.nodeManager->initFunctions();
 							}
 
+						} else if  (nodedef.at(0) == 'E' && nodedef.at(1) == 'R') {
+							std::string errorFunction = nodedef.replace(0,17,"");
+							gm.settings->ERROR_FUNCTION.assign(errorFunction);
 						} else {
 							// Now delete the '.'s
 							depth = std::count(nodedef.begin(), nodedef.end(), '.');

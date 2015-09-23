@@ -27,7 +27,7 @@
 // Create my global object
 GlobalManager gm;
 
-GlobalManager::GlobalManager() {}
+GlobalManager::GlobalManager() : argParser(0), jsonConfig(0), settings(0), fitnessCases(0), nodeManager(0), populationManager(0), optimiser(0), evolutionManager(0), errorFunction(ErrorFunction::ABS_ERROR) {}
 GlobalManager::~GlobalManager() {}
 
 void GlobalManager::initialise(ArgParser * ap,JsonConfigLoader * jcl,Settings * s,
@@ -44,22 +44,29 @@ void GlobalManager::initialise(ArgParser * ap,JsonConfigLoader * jcl,Settings * 
 	errorFunction     = ErrorFunction::ABS_ERROR;
 }
 
+// TODO - maybe something better
+void GlobalManager::updateErrorFunction() throw(ConfigException) {
+	if (settings->ERROR_FUNCTION == "ERROR_SQUARED") {
+		errorFunction = ErrorFunction::ERROR_SQUARED;
+	} else if (settings->ERROR_FUNCTION == "ABS_ERROR") {
+		errorFunction = ErrorFunction::ABS_ERROR;
+	} else {
+		throw ConfigException("Unknown error function: " + settings->ERROR_FUNCTION);
+	}
+}
 
-void GlobalManager::loadSettings(int argc, char* argv[],bool profiling) {
+
+void GlobalManager::loadSettings(int argc, char* argv[],bool profiling) throw(ConfigException) {
 	if (!profiling) { argParser->loadArgs(argc,argv); }
 
 
 	if (argParser->action == "solve") {
 		// Nothing to do here. (for now)
-		// TODO - need to select error function from nodetree
-
 	} else {
 		jsonConfig->loadFile(argParser->configFile);
 		jsonConfig->updateSettings(settings);
 
-		if (settings->ERROR_FUNCTION == "ERROR_SQUARED") {
-			errorFunction = ErrorFunction::ERROR_SQUARED;
-		}
+		updateErrorFunction();
 
 		// Args can override some settings from the config
 		if (!profiling) {

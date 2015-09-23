@@ -242,6 +242,8 @@ protected:
 			CPPUNIT_ASSERT(lines == gm.populationManager->populationlist.v.at(x).rpnNodeVec.size() + 5);
 			CPPUNIT_ASSERT(remove(saveName) == 0);
 		}
+
+		CPPUNIT_ASSERT(false); // Needs tests that write the error function
 	}
 
 	void testWriteGuesses() {

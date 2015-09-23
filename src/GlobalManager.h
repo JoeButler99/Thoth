@@ -30,6 +30,7 @@
 #include "JsonConfigLoader.h"
 #include "Settings.h"
 #include "ErrorFunctions.h"
+#include "ConfigException.h"
 
 
 // Forward Declarations
@@ -60,7 +61,8 @@ public:
 	void initialise(ArgParser * argParser,JsonConfigLoader * jsonConfig,Settings * settings,
 					  FitnessCases * fitnessCases,NodeManager * nodeManager,PopulationManager * populationManager,
 					  Optimiser * optimiser,EvolutionManager * evolutionManager);
-	void loadSettings(int argc, char* argv[],bool profiling = false);
+	void loadSettings(int argc, char* argv[],bool profiling = false) throw(ConfigException);
+	void updateErrorFunction() throw(ConfigException);
 };
 
 #endif /* GLOBALMANAGER_H_ */
