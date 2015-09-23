@@ -3,7 +3,8 @@ import sys
 import optparse
 import pydot
 import matplotlib.pyplot as plt
-import Image
+#import Image
+from PIL import Image
 
 guesses_filename = "program_guesses"
 nodetree_filename = "nodetree.0"
