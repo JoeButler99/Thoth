@@ -7,7 +7,6 @@
 
 #ifndef SRC_ERRORFUNCTIONS_H_
 #define SRC_ERRORFUNCTIONS_H_
-#include <map>
 #include <math.h>       /* fabs */
 
 typedef double (*FnPtr)(double);
@@ -17,7 +16,6 @@ typedef double (*FnPtr)(double);
 class ErrorFunction {
 public:
 
-
 	static inline double ABS_ERROR(double error) {
 		return fabs(error);
 	}
@@ -26,7 +24,6 @@ public:
 		return error * error;
 	}
 
-	static std::map<std::string, FnPtr > functions;
 };
 
 

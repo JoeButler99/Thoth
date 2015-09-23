@@ -2,5 +2,7 @@
 * decide if error function can be set/overridden by the argparser.
 * Test that the scores are working correctly when the error functions change for a population member
 * Test that is is being correclty set by the settings load from JSON
-* remove map from error functions
 
+Other
+=====
+ * look into auto keyword for better typing across architectures
