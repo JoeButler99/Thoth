@@ -323,7 +323,7 @@ protected:
 		CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ABS_ERROR");
 
 		char saveName[50];
-		for (unsigned x = 0; x < 6; x++) {
+		for (unsigned x = 0; x < 7; x++) {
 			sprintf(saveName,"%s.%d","test/testCaseMember",x);
 			std::ifstream ifile(saveName);
 			CPPUNIT_ASSERT(ifile);
@@ -340,6 +340,7 @@ protected:
 				CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ERROR_SQUARED");
 				break;
 			case 5:
+			case 6:
 				CPPUNIT_ASSERT_THROW(gm.populationManager->loadMemberFromFilename(saveName),ConfigException);
 				break;
 

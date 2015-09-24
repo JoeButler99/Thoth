@@ -54,14 +54,6 @@ public:
 		return suiteOfTests;
 	}
 
-//	void setUp() {
-//		freopen("/dev/null","r",stdout);//redirects standard input
-//	}
-//
-//	void tearDown() {
-//		freopen ("/dev/tty", "a", stdout);
-//	}
-
 protected:
 	void testDefaultConstructor() {
 		std::cerr << "Optimiser:\t\t" <<  __func__ << std::endl;

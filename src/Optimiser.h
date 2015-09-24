@@ -45,6 +45,7 @@ public:
 	bool functionSwapper(PopulationMember & p);
 
 	// We use this to score rpn_vectors we create as we try and optimise
+	// TODO - Should this move to the population manager
 	inline double scoreRpnVec(std::vector<Node> & rpn_vec,double score_to_beat) {
 		// we bail out if we don't beat the target.
 		double total_away = 0.0;
@@ -55,10 +56,11 @@ public:
 		// Loop all fitness cases
 		double score;
 		for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
-			double result = PopulationMember::rpnVecSolve(&gm.fitnessCases->cases[y][0],rpn_vec);
+				//double result = PopulationMember::rpnVecSolve(&gm.fitnessCases->cases[y][0],rpn_vec);
+				//score = result - gm.fitnessCases->targets[y];
 
-				score = result - gm.fitnessCases->targets[y];
-				if (score < 0.0) { score *= -1.0;}
+				score = gm.errorFunction(PopulationMember::rpnVecSolve(&gm.fitnessCases->cases[y][0],rpn_vec) - gm.fitnessCases->targets[y]);
+
 				if (gm.fitnessCases->SCALING_ENABLED) {
 					score *= gm.fitnessCases->multipliers[y];
 				}
