@@ -56,6 +56,7 @@ public:
 		//suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test add node to file",&TestPopulationManager::testAddNodesToFile));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test AddConstantsToFile",&TestPopulationManager::testAddConstantsToFile));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test load members from disk",&TestPopulationManager::testLoadMembersFromDisk));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test load members from disk",&TestPopulationManager::testLoadMemberFromFilenameErrorFunction));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test load members from filename",&TestPopulationManager::testLoadMemberFromFilename));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test score one member",&TestPopulationManager::testScoreOneMember));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPopulationManager>("Test solve vec case set",&TestPopulationManager::testSolveVecCaseSet));
@@ -238,7 +239,7 @@ protected:
 			std::ifstream ifile(saveName);
 			CPPUNIT_ASSERT(ifile);
 			unsigned lines = std::count(std::istreambuf_iterator<char>(ifile), std::istreambuf_iterator<char>(), '\n');
-			CPPUNIT_ASSERT(lines == gm.populationManager->populationlist.v.at(x).rpnNodeVec.size() + 5);
+			CPPUNIT_ASSERT(lines == gm.populationManager->populationlist.v.at(x).rpnNodeVec.size() + 6);
 			CPPUNIT_ASSERT(remove(saveName) == 0);
 		}
 	}
@@ -311,6 +312,51 @@ protected:
 		gm.jsonConfig->updateSettings(gm.settings);
 	}
 
+	void testLoadMemberFromFilenameErrorFunction() {
+		std::cerr << "PopulationManager:\t" <<  __func__ << std::endl;
+		// Test the loading of testCaseMembers which have are configured with
+		// different options for ERROR_FUNCTION
+
+		gm.fitnessCases->clear();
+		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/testSinx"));
+
+		CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ABS_ERROR");
+
+		char saveName[50];
+		for (unsigned x = 0; x < 7; x++) {
+			sprintf(saveName,"%s.%d","test/testCaseMember",x);
+			std::ifstream ifile(saveName);
+			CPPUNIT_ASSERT(ifile);
+			gm.populationManager->populationlist.v.clear();
+			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
+			gm.jsonConfig->updateSettings(gm.settings); // Put settings back to defaults
+			gm.updateErrorFunction();
+
+
+			switch (x) {
+			case 3:
+				gm.populationManager->loadMemberFromFilename(saveName);
+				CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+				CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ERROR_SQUARED");
+				break;
+			case 5:
+			case 6:
+				CPPUNIT_ASSERT_THROW(gm.populationManager->loadMemberFromFilename(saveName),ConfigException);
+				break;
+
+			default:
+				// if more error funcitons are added they should end up here
+				gm.populationManager->loadMemberFromFilename(saveName);
+				CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
+				CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ABS_ERROR");
+				break;
+			}
+
+		}
+
+
+	}
+
 	void testLoadMemberFromFilename() {
 		std::cerr << "PopulationManager:\t" <<  __func__ << std::endl;
 
@@ -337,7 +383,7 @@ protected:
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(1).rpnNodeVec.size() == 5);
 		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(2).score - 33.5557 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(2).rpnNodeVec.size())) < 0.001);
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(2).rpnNodeVec.size() == 5);
-		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(3).score - 32.5766 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(3).rpnNodeVec.size())) < 0.001);
+		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(3).score - 27.6895 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(3).rpnNodeVec.size())) < 0.001);
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(3).rpnNodeVec.size() == 8);
 		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(4).score - 35.3952 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(4).rpnNodeVec.size())) < 0.001);
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(4).rpnNodeVec.size() == 8);

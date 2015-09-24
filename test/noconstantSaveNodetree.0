@@ -2,6 +2,8 @@
 # Generated Node Tree from fitness_cases/large_test_case
 # This Tree scored: 158550
 # Total Nodes: 65
+FUNCTION_SET: FinanceFull
+ERROR_FUNCTION: ABS_ERROR
 F:-1| ROOT WITH(1) inputs
 .F:26| ln e
 ..F:3| Divide

@@ -37,7 +37,8 @@ public:
 
 	static std::vector<FunctionSet> functionSets;
 
-	// Build Functionsets is the current way to
+	// Build Functionsets is the current way to get new combinations of available functions into Thoth
+	// This system may be improved in future so that they may be dynamic instead of compiled
 	static void buildFunctionSets() {
 		functionSets.clear();
 

@@ -29,8 +29,9 @@
 #include <stdio.h>
 
 // Get the test classes
-//#include "TestArgParser.h"
-//#include "TestJsonConfigLoader.h"
+#include "TestArgParser.h"
+#include "TestJsonConfigLoader.h"
+#include "TestSettings.h"
 #include "TestRNG.h"
 #include "TestFitnessCases.h"
 #include "TestFunction.h"
@@ -40,10 +41,13 @@
 #include "TestPopulationManager.h"
 #include "TestOptimiser.h"
 #include "TestEvolutionManager.h"
+#include "TestConstantPool.h"
+#include "TestFunctionSets.h"
+#include "TestErrorFunction.h"
 #include "../src/RNG.h"
 #include "../src/Globals.h"
 #include "../src/GlobalManager.h"
-#include "TestConstantPool.h"
+
 
 
 ArgParser ap;
@@ -68,31 +72,30 @@ int main(int argc, char **argv) {
     gm.optimiser->silence = true;
     gm.evolutionManager->silence = true;
 
-
-
     std::cout << "Creating Test Suites:" << std::endl;
     CppUnit::TextUi::TestRunner runner;
     CppUnit::TestResultCollector result;
 
-//    runner.addTest(TestArgParser::suite());
-//    runner.addTest(TestJsonConfigLoader::suite());
+    runner.addTest(TestArgParser::suite());
+    runner.addTest(TestJsonConfigLoader::suite());
+    runner.addTest(TestSettings::suite());
     runner.addTest(TestRNG::suite());
     runner.addTest(TestFitnessCases::suite());
     runner.addTest(TestFunction::suite());
+    runner.addTest(TestFunctionSets::suite());
     runner.addTest(TestNode::suite());
     runner.addTest(TestNodeManager::suite());
+    runner.addTest(TestErrorFunctions::suite());
     runner.addTest(TestPopulationMember::suite());
     runner.addTest(TestPopulationManager::suite());
     runner.addTest(TestOptimiser::suite());
     runner.addTest(TestEvolutionManager::suite());
     runner.addTest(TestConstantPool::suite());
 
-
-    std::cout<< "Running the unit tests."<< std::endl;
+    std::cout<< "Running the unit tests.\n"<< std::endl;
     runner.run("",false,true,false);
 
     remove(gm.settings->GUESSES_FILE.c_str());
-
 
     return runner.result().wasSuccessful() ? 0 : 1;
 }

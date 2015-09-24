@@ -26,6 +26,7 @@
 #include <omp.h>
 #include "PopulationManager.h"
 
+
 // This is what sorts the populationlist array by their scores
 struct sort_pop_member_by_score
 {
@@ -75,9 +76,7 @@ void PopulationManager::scoreOneMember(int memberid) {
 	if ( populationlist.v.at(memberid).hasChanged ) {
 		// Loop all fitness cases
 		for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
-			double result = populationlist.v[memberid].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]);
-			double score = result - gm.fitnessCases->targets[y];
-			if (score < 0.0) { score *= -1.0;}
+			double score = gm.errorFunction( populationlist.v[memberid].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]) - gm.fitnessCases->targets[y]);
 			if (scaling) {
 				score *= gm.fitnessCases->multipliers[y];
 			}
@@ -103,10 +102,8 @@ void PopulationManager::scoreAllVecRpn() {
 				double total_away = 0.0;
 				// Loop all fitness cases
 				for (unsigned int y = 0; y < gm.fitnessCases->TOTAL_CASES; y++) {
+					double score = gm.errorFunction(populationlist.v[x].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]) - gm.fitnessCases->targets[y]);
 
-					double result = populationlist.v[x].rpnVecSolveSelf( &gm.fitnessCases->cases[y][0]);
-					double score = result - gm.fitnessCases->targets[y];
-					if (score < 0.0) { score *= -1.0;}
 					if (scaling) {
 						score *= gm.fitnessCases->multipliers[y];
 					}
@@ -197,6 +194,7 @@ void PopulationManager::writeMembersToDisk() {
 		writefile << "# This Tree scored: " << populationlist.v.at(x).score << "\n";
 		writefile << "# Total Nodes: " << populationlist.v.at(x).rpnNodeVec.size() << "\n";
 		writefile << "FUNCTION_SET: " << gm.settings->FUNCTION_SET << "\n";
+		writefile << "ERROR_FUNCTION: " << gm.settings->ERROR_FUNCTION << "\n";
 		pos = -1;
 		addConstantsToFile(&writefile);
 		addNodesToFile(x,&writefile,0);
@@ -233,10 +231,12 @@ void PopulationManager::writeGuesses() {
 }
 
 
-void PopulationManager::loadMemberFromFilename(const char * filename) {
+void PopulationManager::loadMemberFromFilename(const char * filename) throw(ConfigException) {
 	std::ifstream loadfile(filename);
 	std::vector<Node> rpn_node_vec;
 	if (loadfile) {
+		bool foundErrorFunction = false;
+		bool foundFunctionSet = false;
 		// read the file by line and build nodes:
 		for( std::string line; getline( loadfile, line ); ) {
 			std::string nodedef;
@@ -269,9 +269,14 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 							functionSet.erase(std::remove(functionSet.begin(), functionSet.end(), '\n'), functionSet.end());
 							if (functionSet != gm.settings->FUNCTION_SET) {
 								gm.settings->FUNCTION_SET.assign(functionSet);
-								gm.nodeManager->initFunctions();
 							}
+							foundFunctionSet = true;
 
+						} else if  (nodedef.at(0) == 'E' && nodedef.at(1) == 'R') {
+							std::string errorFunction = nodedef.replace(0,16,"");
+							gm.settings->ERROR_FUNCTION.assign(errorFunction);
+							gm.updateErrorFunction();
+							foundErrorFunction = true;
 						} else {
 							// Now delete the '.'s
 							depth = std::count(nodedef.begin(), nodedef.end(), '.');
@@ -292,8 +297,14 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 				part ++;
 			}
 		}
+		if (!foundErrorFunction) {
+			throw ConfigException("Did not find Error Function for nodetree called: " + (std::string)filename);
+		}
+		if (!foundFunctionSet) {
+			throw ConfigException("Did not find Function set for nodetree called: " + (std::string)filename);
+		}
 
-		// Make this into a populatiom member and put it on the pile
+		// Make this into a population member and put it on the pile
 		PopulationMember p;
 		p.rpnNodeVec = rpn_node_vec;
 		p.method = "Saved";
@@ -302,7 +313,7 @@ void PopulationManager::loadMemberFromFilename(const char * filename) {
 	}
 }
 
-void PopulationManager::loadMembersFromDisk() {
+void PopulationManager::loadMembersFromDisk() throw(ConfigException) {
 	for (unsigned int x = 0; x < gm.settings->LOAD_TOTAL; x++) {
 		char filename[100];
 		sprintf(filename,"%s.%d",gm.settings->SAVE_FILE_PREFIX.c_str(),x);

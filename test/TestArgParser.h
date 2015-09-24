@@ -42,38 +42,65 @@ public:
 
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestArgParser>("Test testDefultConstructor",&TestArgParser::testDefultConstructor));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestArgParser>("Test testLoadArgsSolver",&TestArgParser::testLoadArgsSolver));
-		suiteOfTests->addTest(new CppUnit::TestCaller<TestArgParser>("Test testLoadArgsCli",&TestArgParser::testLoadArgsCli));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestArgParser>("Test testLoadArgsFail",&TestArgParser::testLoadArgsFail));
 
 		return suiteOfTests;
 	}
 protected:
 	void testDefultConstructor() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		std::cerr << "ArgParser:\t\t" <<  __func__ << std::endl;
+		ArgParser argparser;
 
-		CPPUNIT_ASSERT(false);
+		CPPUNIT_ASSERT(argparser.numVars == 0);
+		CPPUNIT_ASSERT(argparser.isValid(false) == false); // Fails on no input params
 	}
 
 	void testLoadArgsSolver() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		std::cerr << "ArgParser:\t\t" <<  __func__ << std::endl;
+		ArgParser argparser;
 
-		CPPUNIT_ASSERT(false);
-	}
+		// The weird casts are used to create an arrgay live char * argv[] in main
+		char* args[] = {(char *)"dummy",
+						(char *)"--action",
+						(char *)"solve",
+						(char *)"--num-vars",
+						(char *)"13",
+						(char *)"--nodetree",
+						(char *)"nodetree.0",
+						(char *)"--case-variables",
+						(char *)"'0.61 -0.09 4 2 4 3 4 -0.4 1 2 0 2 1'"};
+        int argc = 9;
+        argparser.loadArgs(argc,args);
 
-	void testLoadArgsCli() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
 
-		CPPUNIT_ASSERT(false);
+        CPPUNIT_ASSERT(argparser.numVars == 13);
+        CPPUNIT_ASSERT(argparser.isValid(false));
+        CPPUNIT_ASSERT(argparser.action == "solve");
+        CPPUNIT_ASSERT(argparser.nodetree == "nodetree.0");
+        CPPUNIT_ASSERT(argparser.fitnessCases == "");
+        CPPUNIT_ASSERT(argparser.configFile == "conf/config.json");
+        CPPUNIT_ASSERT(argparser.caseVars == "'0.61 -0.09 4 2 4 3 4 -0.4 1 2 0 2 1'" );
 	}
 
 	void testLoadArgsFail() {
-		std::cerr << "ArgParser:\t\t\t" <<  __func__ << std::endl;
+		std::cerr << "ArgParser:\t\t" <<  __func__ << std::endl;
 
-		CPPUNIT_ASSERT(false);
+		ArgParser argparser;
+		// The weird casts are used to create an arrgay live char * argv[] in main
+		char* args[] = {(char *)"dummy",
+						(char *)"--action",
+						(char *)"badaction",
+						(char *)"--num-vars",
+						(char *)"13",
+						(char *)"--nodetree",
+						(char *)"nodetree.0",
+						(char *)"--case-variables",
+						(char *)"'0.61 -0.09 4 2 4 3 4 -0.4 1 2 0 2 1'"};
+        int argc = 9;
+        argparser.loadArgs(argc,args,false);
+        CPPUNIT_ASSERT(argparser.isValid(false) == false);
 
 	}
-
-
 
 };
 

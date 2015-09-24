@@ -2,6 +2,8 @@
 # Generated Node Tree from F. 
 # This Tree scored: 25.2386
 # Total Nodes: 12
+FUNCTION_SET: FinanceFull
+ERROR_FUNCTION: ABS_ERROR
 F:-1| ROOT WITH(1) inputs
 .F:1| Subtract
 ..F:9| Min 2
