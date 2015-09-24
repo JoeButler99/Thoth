@@ -239,11 +239,9 @@ protected:
 			std::ifstream ifile(saveName);
 			CPPUNIT_ASSERT(ifile);
 			unsigned lines = std::count(std::istreambuf_iterator<char>(ifile), std::istreambuf_iterator<char>(), '\n');
-			CPPUNIT_ASSERT(lines == gm.populationManager->populationlist.v.at(x).rpnNodeVec.size() + 5);
+			CPPUNIT_ASSERT(lines == gm.populationManager->populationlist.v.at(x).rpnNodeVec.size() + 6);
 			CPPUNIT_ASSERT(remove(saveName) == 0);
 		}
-
-		CPPUNIT_ASSERT(false); // Needs tests that write the error function
 	}
 
 	void testWriteGuesses() {
@@ -322,6 +320,7 @@ protected:
 		gm.fitnessCases->clear();
 		CPPUNIT_ASSERT(gm.fitnessCases->loadFile("fitness_cases/testSinx"));
 
+		CPPUNIT_ASSERT(gm.settings->ERROR_FUNCTION == "ABS_ERROR");
 
 		char saveName[50];
 		for (unsigned x = 0; x < 6; x++) {
@@ -330,6 +329,9 @@ protected:
 			CPPUNIT_ASSERT(ifile);
 			gm.populationManager->populationlist.v.clear();
 			CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 0);
+			gm.jsonConfig->updateSettings(gm.settings); // Put settings back to defaults
+			gm.updateErrorFunction();
+
 
 			switch (x) {
 			case 3:
@@ -342,7 +344,6 @@ protected:
 				break;
 
 			default:
-				// This is where 2 and 3 will both endup
 				// if more error funcitons are added they should end up here
 				gm.populationManager->loadMemberFromFilename(saveName);
 				CPPUNIT_ASSERT(gm.populationManager->populationlist.v.size() == 1);
@@ -381,7 +382,7 @@ protected:
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(1).rpnNodeVec.size() == 5);
 		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(2).score - 33.5557 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(2).rpnNodeVec.size())) < 0.001);
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(2).rpnNodeVec.size() == 5);
-		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(3).score - 32.5766 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(3).rpnNodeVec.size())) < 0.001);
+		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(3).score - 27.6895 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(3).rpnNodeVec.size())) < 0.001);
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(3).rpnNodeVec.size() == 8);
 		CPPUNIT_ASSERT(fabs(gm.populationManager->populationlist.v.at(4).score - 35.3952 - (gm.settings->NODE_WEIGHT * gm.populationManager->populationlist.v.at(4).rpnNodeVec.size())) < 0.001);
 		CPPUNIT_ASSERT(gm.populationManager->populationlist.v.at(4).rpnNodeVec.size() == 8);

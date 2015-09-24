@@ -194,6 +194,7 @@ void PopulationManager::writeMembersToDisk() {
 		writefile << "# This Tree scored: " << populationlist.v.at(x).score << "\n";
 		writefile << "# Total Nodes: " << populationlist.v.at(x).rpnNodeVec.size() << "\n";
 		writefile << "FUNCTION_SET: " << gm.settings->FUNCTION_SET << "\n";
+		writefile << "ERROR_FUNCTION: " << gm.settings->ERROR_FUNCTION << "\n";
 		pos = -1;
 		addConstantsToFile(&writefile);
 		addNodesToFile(x,&writefile,0);
@@ -234,6 +235,8 @@ void PopulationManager::loadMemberFromFilename(const char * filename) throw(Conf
 	std::ifstream loadfile(filename);
 	std::vector<Node> rpn_node_vec;
 	if (loadfile) {
+		bool foundErrorFunction = false;
+		bool foundFunctionSet = false;
 		// read the file by line and build nodes:
 		for( std::string line; getline( loadfile, line ); ) {
 			std::string nodedef;
@@ -266,12 +269,14 @@ void PopulationManager::loadMemberFromFilename(const char * filename) throw(Conf
 							functionSet.erase(std::remove(functionSet.begin(), functionSet.end(), '\n'), functionSet.end());
 							if (functionSet != gm.settings->FUNCTION_SET) {
 								gm.settings->FUNCTION_SET.assign(functionSet);
-								gm.nodeManager->initFunctions();
 							}
+							foundFunctionSet = true;
 
 						} else if  (nodedef.at(0) == 'E' && nodedef.at(1) == 'R') {
-							std::string errorFunction = nodedef.replace(0,17,"");
+							std::string errorFunction = nodedef.replace(0,16,"");
 							gm.settings->ERROR_FUNCTION.assign(errorFunction);
+							gm.updateErrorFunction();
+							foundErrorFunction = true;
 						} else {
 							// Now delete the '.'s
 							depth = std::count(nodedef.begin(), nodedef.end(), '.');
@@ -292,8 +297,14 @@ void PopulationManager::loadMemberFromFilename(const char * filename) throw(Conf
 				part ++;
 			}
 		}
+		if (!foundErrorFunction) {
+			throw ConfigException("Did not find Error Function for nodetree called: " + (std::string)filename);
+		}
+		if (!foundFunctionSet) {
+			throw ConfigException("Did not find Function set for nodetree called: " + (std::string)filename);
+		}
 
-		// Make this into a populatiom member and put it on the pile
+		// Make this into a population member and put it on the pile
 		PopulationMember p;
 		p.rpnNodeVec = rpn_node_vec;
 		p.method = "Saved";

@@ -12,3 +12,4 @@ Other
  * TestConfigException
  * Check if the nodetree weight can be added to cut score earlier to drop unsuitable trees earlier?
  * Use smaller fitness cases for profiling?
+ * protection when incorrect nodetree is used for training / teaching sets
