@@ -10,3 +10,5 @@ Other
  * show score minus size cost in output
  * Use of exceptions for config errors
  * TestConfigException
+ * Check if the nodetree weight can be added to cut score earlier to drop unsuitable trees earlier?
+ * Use smaller fitness cases for profiling?
