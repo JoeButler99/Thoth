@@ -1,0 +1,70 @@
+// JSON Config - This still needs to be valid JSON with the 
+// 				 addition that is supports c style comments.
+//				 The parser is fairly good at letting you know where any errors lie.
+//
+// Format:       "<keyname>" : <value>, 
+{
+	//
+	//		Run Configuration
+	//
+	// What is the location of the case file to load. 
+	"FUNCTION_SET"              : "FinanceFull",                 // Which functions should we use    
+	"ERROR_FUNCTION"            : "ABS_ERROR",              
+	"FITNESS_CASE_FILE"         : "fitness_cases/testSinx_20c",  // Fitness cases to load
+	"POPULATION"                : 800,   // What size to create the population
+	"KEEP_TOP_PERCENT"          : 25,    // What percentage of members to keep until the next generation
+	"NODE_WEIGHT"               : 0.05,  // This is the weight per node added onto the score. Use 0 to disable
+	"GENERATIONS"               : 200,   // How many generations to run before exit.
+	"EXIT_SCORE"	            : 0,     // What score is suitable to exit upon
+	"INITIAL_MAX_DEPTH"         : 3,     // The maximum initial tree depth for newly generated nodetrees
+	"USE_CUT_SCORING"           : true,  // Cut scoring stops solving fitness cases for the nodetree as soon as it realises it has not scored high enough to reach the next generation.  
+	"DISCARD_DUPLICATES"        : true, // Should newly generated population members be discarded if they have the same node tree as another population member
+        "MAX_DUPLICATE_RETRIES"	    : 50,     // How many Duplicates to discard before a RuntimeError is thrown. If set to 0, do not throw errors.
+	
+	//
+	//	File and Save options
+	//
+	"SAVE_EVERY"                : 2,     // How often should we dump the progress into the nodetree files
+	"SAVE_TOTAL"                : 5,     // Save up to how many nodetrees
+	"SAVE_FILE_PREFIX"          : "unit-test-nodetree", // What prefix to use for saving program members
+	"SAVE_AFTER_EACH_OPTIMISE"  : true,  // Optimisation can take a long time - save it!
+	"LOAD_SAVED"                : true,  // Try to load saved nodetrees at startup
+	"LOAD_TOTAL"                : 5,     // Try to lado up to how many nodetrees
+	"SHOW_GUESSES"              : true,  // Enable to peridically write the list of program solutions to a file
+	"GUESSES_FILE"              : "unit-test-program_guesses",  // What should the guess file be called
+	"SAVE_GUESSES_EVERY"        : 5,     // How many generations per guesses file
+	
+	
+	//
+	//	Evolution Settings
+	//
+	"MUTATE_NODE_PERCENT"       : 5,     // What percentage of required nodetree to create by mutating a node
+	"MUTATE_TREE_PERCENT"       : 20,    // What percentage of required nodetree to create by mutating a node into a new tree
+	"CUT_TREE_PERCENT"          : 25,    // What percentage of required nodetree to create by cutting back a nodetree into a new node
+	"CROSSOVER_PERCENT"         : 40,    // What percentage of required nodetree to create by genetic crossover between two members
+	"CROSSOVER_NEW_ROOT_PERCENT": 10,     // What percentage of required nodetree to create by crossover new root - create a new root and take subsections from new members as the tree
+	"MUTATE_TREE_MAX_DEPTH"     : 2,     // What percentage of required nodetree to create by mutate node
+	
+		
+	//
+	//	Optimiser Settings
+	//
+	"OPTIMISE_CUTTER_EVERY"     : 20,    // After how many generations should we run branch cutter optimisation
+	"OPTIMISE_TERMINALS_EVERY"  : 40,    // After how many generations should we run terminal optimisation
+	"OPTIMISE_FUNCTIONS_EVERY"  : 30,    // After how many generations should we run function optimisation
+	"ITERATE_CUTTER"            : false, // Do we loop the tree cutter until it stops finding improvements or just run once.
+	"ITERATE_TERMINALS"         : false, // Do we loop the improve terminals until it stops finding improvements or just run once.
+	"ITERATE_FUNCTIONS"         : false, // Do we loop the improve functions until it stops finding improvements or just run once.
+	
+	
+	//
+	// Display Options
+	//
+	"SHOW_HEADINGS_EVERY"        : 30,     // After how many generations do we repeat the headings
+	
+	
+	//
+	// Mathematical Constants
+	//
+	"EULER" : 2.71828182845
+}

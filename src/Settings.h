@@ -62,6 +62,8 @@ public:
 	unsigned int MUTATE_TREE_MAX_DEPTH;
 	unsigned int CROSSOVER_NEW_ROOT_PERCENT;
 	unsigned int SHOW_HEADINGS_EVERY;
+	bool		 DISCARD_DUPLICATES;
+	unsigned int MAX_DUPLICATE_RETRIES;
 	std::string  FITNESS_CASE_FILE;
 	Settings();
 	~Settings();

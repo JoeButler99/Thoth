@@ -44,6 +44,11 @@
 #include "TestConstantPool.h"
 #include "TestFunctionSets.h"
 #include "TestErrorFunction.h"
+
+// Get the new feature tests
+#include "TestDistinctPopulation.h"
+
+// Program src includes
 #include "../src/RNG.h"
 #include "../src/Globals.h"
 #include "../src/GlobalManager.h"
@@ -76,21 +81,22 @@ int main(int argc, char **argv) {
     CppUnit::TextUi::TestRunner runner;
     CppUnit::TestResultCollector result;
 
-    runner.addTest(TestArgParser::suite());
-    runner.addTest(TestJsonConfigLoader::suite());
-    runner.addTest(TestSettings::suite());
-    runner.addTest(TestRNG::suite());
-    runner.addTest(TestFitnessCases::suite());
-    runner.addTest(TestFunction::suite());
-    runner.addTest(TestFunctionSets::suite());
-    runner.addTest(TestNode::suite());
-    runner.addTest(TestNodeManager::suite());
-    runner.addTest(TestErrorFunctions::suite());
-    runner.addTest(TestPopulationMember::suite());
-    runner.addTest(TestPopulationManager::suite());
-    runner.addTest(TestOptimiser::suite());
-    runner.addTest(TestEvolutionManager::suite());
-    runner.addTest(TestConstantPool::suite());
+//    runner.addTest(TestArgParser::suite());
+//    runner.addTest(TestJsonConfigLoader::suite());
+//    runner.addTest(TestSettings::suite());
+//    runner.addTest(TestRNG::suite());
+//    runner.addTest(TestFitnessCases::suite());
+//    runner.addTest(TestFunction::suite());
+//    runner.addTest(TestFunctionSets::suite());
+//    runner.addTest(TestNode::suite());
+//    runner.addTest(TestNodeManager::suite());
+//    runner.addTest(TestErrorFunctions::suite());
+//    runner.addTest(TestPopulationMember::suite());
+//    runner.addTest(TestPopulationManager::suite());
+//    runner.addTest(TestOptimiser::suite());
+//    runner.addTest(TestEvolutionManager::suite());
+//    runner.addTest(TestConstantPool::suite());
+    runner.addTest(TestDistinctPopulation::suite());
 
     std::cout<< "Running the unit tests.\n"<< std::endl;
     runner.run("",false,true,false);
