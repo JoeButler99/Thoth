@@ -48,7 +48,7 @@ public:
 
 	inline Function & getFunctionByNum(unsigned int fNo) {
 
-		for(unsigned int x = 0; x < functionlist.size(); x++) {
+		for(unsigned int x = 0; x <= functionlist.size(); x++) {
 			if(functionlist.at(x).mynum == fNo) {
 				return functionlist.at(x);
 			}

@@ -108,6 +108,20 @@ public:
 		financeFull.functionList.push_back(Function("LnE",1,26,rpnLnE));
 		functionSets.push_back(financeFull);
 
+
+		// This functionlist has been specifically to compare Thoth with the Rust port
+        FunctionSet compare("Compare");
+        compare.functionList.push_back(Function("Add",2,0,rpnAdd));
+        compare.functionList.push_back(Function("Subtract",2,1,rpnSubtract));
+        compare.functionList.push_back(Function("Multiply",2,2,rpnMultiply));
+        compare.functionList.push_back(Function("Divide",2,3,rpnDivide));
+        compare.functionList.push_back(Function("PercentChg",2,4,rpnPercentChange));
+        compare.functionList.push_back(Function("PercentOf",2,5,rpnPercentOf));
+        compare.functionList.push_back(Function("AVG2",2,6,rpnAvgOf2));
+        compare.functionList.push_back(Function("Min2",2,7,rpnMinOf2));
+        compare.functionList.push_back(Function("Max2",2,8,rpnMaxOf2));
+        functionSets.push_back(compare);
+
 	}
 };
 

@@ -242,11 +242,14 @@ void EvolutionManager::mutateSingleNode(int num_needed, int pool_size) {
 			// Make the change, depending on what we have
 			if (p.rpnNodeVec.at(edit_node).isTerminal) {
 				unsigned int new_t;
+				unsigned int tries = 0;
 				while (true) {
 					new_t = rng.iRand(gm.fitnessCases->TERMINALS);
-					if (new_t != p.rpnNodeVec.at(edit_node).tNo) {
+					if (new_t != p.rpnNodeVec.at(edit_node).tNo || tries == 3) {
 						break;
 					}
+					tries ++;
+
 				}
 				p.rpnNodeVec.at(edit_node).tNo = new_t;
 			} else {

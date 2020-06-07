@@ -61,7 +61,7 @@ inline void rpnPercentMe(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 inline void rpnPercentChange(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 	highest -=2;
 	if (rpnStack[highest+1] == 0.0 ) { rpnStack[highest] =  0.0; }
-	else { rpnStack[highest] =  ((rpnStack[highest] - rpnStack[highest+1]) / rpnStack[highest+1])  * 100.0; }
+	else { rpnStack[highest] =  ((rpnStack[highest] - rpnStack[highest+1]) / fabs(rpnStack[highest+1]))  * 100.0; }
 }
 
 inline void rpnPercentOf(double rpnStack[RPN_STACK_LIMIT],int & highest) {
@@ -147,6 +147,11 @@ inline void rpnMaxOf4(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 inline void rpnToInt(double rpnStack[RPN_STACK_LIMIT],int & highest) {
 	highest --;
 	rpnStack[highest] =  round(rpnStack[highest]);
+}
+
+inline void rpnAbs(double rpnStack[RPN_STACK_LIMIT],int & highest) {
+    highest --;
+    rpnStack[highest] =  fabs(rpnStack[highest]);
 }
 
 inline void rpnSquareRoot(double rpnStack[RPN_STACK_LIMIT],int & highest) {
